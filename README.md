@@ -24,3 +24,11 @@ It is possible to configure
 
 ## data
 All data for profiles is stored in localstorage.
+
+#Development
+For rapid development [create-react-app](https://github.com/facebookincubator/create-react-app) is used.
+This is only needed for development. 
+
+#deploy
+copy build folder  
+
