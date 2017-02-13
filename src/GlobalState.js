@@ -75,6 +75,11 @@ class GlobalState {
   getRating(element) {
     return this.state.ratings.filter(like => like.pid === element.pid)[0] || null;
   }
+  getRatings() {
+    const like = this.state.ratings.filter(rating => rating.like).map(rating => rating.pid);
+    const dislike = this.state.ratings.filter(rating => !rating.like).map(rating => rating.pid);
+    return {like, dislike};
+  }
 }
 
 export default new GlobalState();

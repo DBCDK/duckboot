@@ -52,9 +52,14 @@ function promiseRequest({method, url, query = {}, body = {}}) {
 router.post('/:service', bodyparser, async((ctx) => {
   const service = getService(ctx.params.service);
   if (service) {
-    const response = await(promiseRequest({method: service.method, url: service.url, query: ctx.query, body: ctx.request.body}));
-    ctx.body = response.body;
-    ctx.status = response.status;
+    try {
+      const response = await(promiseRequest({method: service.method, url: service.url, query: ctx.query, body: ctx.request.body}));
+      ctx.body = response.body;
+      ctx.status = response.status;
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
   else {
     ctx.status = 404;
