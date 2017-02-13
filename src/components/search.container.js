@@ -10,7 +10,6 @@ export default class Search extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.input.value);
     const query = {
       limit: this.limit,
       q: this.input.value
@@ -19,9 +18,14 @@ export default class Search extends React.Component {
     request.post('http://localhost:3001/search')
       .send(query)
       .end((err, res) => {
+
         if (res && res.text) {
           const data = JSON.parse(res.text).data;
-          GlobalState.setState({search: {data, query: query, searching: false}})
+          console.log(data);
+          GlobalState.setState({search: {data, query: query.q, searching: false}})
+        }
+        else {
+          GlobalState.setState({search: {data: [], query: query.q, searching: false}})
         }
       });
   };

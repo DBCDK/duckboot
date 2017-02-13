@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Search from './components/search.container';
+import SearchResult from './components/searchResult.component';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
           What should I read...?
         </p>
         <Search/>
+        <SearchResult />
       </div>
     );
   }
