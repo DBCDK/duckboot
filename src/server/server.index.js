@@ -6,6 +6,7 @@
 // Libraries
 const Koa = require('koa');
 const Router = require('koa-router');
+const cors = require('koa2-cors');
 const async = require('asyncawait/async');
 const await = require('asyncawait/await');
 const request = require('superagent');
@@ -48,20 +49,22 @@ function promiseRequest({method, url, query = {}, body = {}}) {
   });
 }
 
-
 router.post('/:service', bodyparser, async((ctx) => {
-  console.log('øheo');
   const service = getService(ctx.params.service);
-  console.log(ctx.request.body, "body");
   if (service) {
     const response = await(promiseRequest({method: service.method, url: service.url, query: ctx.query, body: ctx.request.body}));
     ctx.body = response.body;
     ctx.status = response.status;
   }
-  ctx.status = 402;
+  else {
+    ctx.status = 404;
+  }
+
 }));
 
+app.use(cors({origin: false}));
 app.use(router.routes());
+
 app.on('error', (err) => {
   console.error('Server error', {error: err.message, stack: err.stack});
 });

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import request from 'superagent';
+import Search from './components/search.container';
+import SearchResult from './components/searchResult.component';
 
 class App extends Component {
   render() {
@@ -11,6 +12,8 @@ class App extends Component {
         <p className="app-intro">
           What should I read...?
         </p>
+        <Search/>
+        <SearchResult />
       </div>
     );
   }
