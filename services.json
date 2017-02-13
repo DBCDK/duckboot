@@ -1,0 +1,17 @@
+[
+  {
+    "name": "search",
+    "url": "http://xp-p02.dbc.dk:9918/search",
+    "method": "post"
+  },
+  {
+    "name": "aquamend",
+    "url": "http://0.recommender-aqua.xp.staging.mcp1-proxy.dbc.dk/recommender/loan",
+    "method": "post"
+  },
+  {
+    "name": "aquabine",
+    "url": "http://0.recommender-aqua.xp.staging.mcp1-proxy.dbc.dk/recommender/loan",
+    "method": "post"
+  }
+]

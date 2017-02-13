@@ -1,9 +1,12 @@
 import request from 'superagent';
 
+window.request = request;
 class GlobalState {
   constructor() {
     this.listeners = [];
     this.state = {
+      recommenders: [],
+      recommendations: [],
       ratings: [],
       search: {
         query: "",
@@ -12,16 +15,30 @@ class GlobalState {
       }
     };
     this.history = [];
+
+    this.loadInitialState();
   }
+
+  loadInitialState() {
+    request.get('settings.json')
+      .end((err, res) => {
+        const initState = JSON.parse(res.text);
+        const recommenders = initState.recommenders;
+        this.setState({recommenders})
+      });
+  }
+
   setState(newState) {
     this.history.push(Object.assign({}, this.state));
     this.state = Object.assign({}, this.state, newState);
     this.onChange();
   }
+
   onChange() {
     const newState = Object.assign({}, this.state);
     this.listeners.forEach(cb => cb(newState));
   }
+
   listen(cb) {
     this.listeners.push(cb);
   }
@@ -41,6 +58,22 @@ class GlobalState {
       });
   }
 
+  recommend(url, {like, dislike}) {
+    this.setState({recommendations: []});
+    request.post(url)
+      .send({like, dislike})
+      .end((err, res) => {
+        if (res && res.text) {
+          const result = JSON.parse(res.text).result;
+          const elements = result.map(element => element[1]);
+          this.setState({recommendations: elements})
+        }
+        else {
+          this.setState({recommendations: []});
+        }
+      });
+  }
+
   addLike(element, value) {
     this.removeLike(element);
     const ratings = this.state.ratings.concat([{
@@ -50,6 +83,7 @@ class GlobalState {
     }]);
     this.setState({ratings})
   }
+
   removeLike(element) {
     const ratings = this.state.ratings.filter(like => like.pid !== element.pid);
     this.setState({ratings})
@@ -57,6 +91,12 @@ class GlobalState {
 
   getRating(element) {
     return this.state.ratings.filter(like => like.pid === element.pid)[0] || null;
+  }
+
+  getRatings() {
+    const like = this.state.ratings.filter(rating => rating.like).map(rating => rating.pid);
+    const dislike = this.state.ratings.filter(rating => !rating.like).map(rating => rating.pid);
+    return {like, dislike};
   }
 }
 
