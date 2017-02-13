@@ -4,14 +4,18 @@ window.request = request;
 class GlobalState {
   constructor() {
     this.listeners = [];
-    this.state = {
-      recommenders: [],
-      recommendations: [],
-      ratings: [],
-      search: {
-        query: "",
-        searching: false,
-        data: []
+    this.profiles = [];
+    this.current = {
+      profile: {},
+      state: {
+        recommenders: [],
+        recommendations: [],
+        ratings: [],
+        search: {
+          query: "",
+          searching: false,
+          data: []
+        }
       }
     };
     this.history = [];
@@ -30,12 +34,16 @@ class GlobalState {
 
   setState(newState) {
     this.history.push(Object.assign({}, this.state));
-    this.state = Object.assign({}, this.state, newState);
+    this.current.state = Object.assign({}, this.current.state, newState);
     this.onChange();
   }
 
+  getState() {
+    return this.current.state;
+  }
+
   onChange() {
-    const newState = Object.assign({}, this.state);
+    const newState = Object.assign({}, this.current.state);
     this.listeners.forEach(cb => cb(newState));
   }
 
@@ -76,7 +84,7 @@ class GlobalState {
 
   addLike(element, value) {
     this.removeLike(element);
-    const ratings = this.state.ratings.concat([{
+    const ratings = this.getState().ratings.concat([{
       pid: element.pid,
       element,
       like: value
@@ -85,19 +93,32 @@ class GlobalState {
   }
 
   removeLike(element) {
-    const ratings = this.state.ratings.filter(like => like.pid !== element.pid);
+    const ratings = this.getState().ratings.filter(like => like.pid !== element.pid);
     this.setState({ratings})
   }
 
   getRating(element) {
-    return this.state.ratings.filter(like => like.pid === element.pid)[0] || null;
+    return this.getState().ratings.filter(like => like.pid === element.pid)[0] || null;
   }
 
   getRatings() {
-    const like = this.state.ratings.filter(rating => rating.like).map(rating => rating.pid);
-    const dislike = this.state.ratings.filter(rating => !rating.like).map(rating => rating.pid);
+    const like = this.getState().ratings.filter(rating => rating.like).map(rating => rating.pid);
+    const dislike = this.getState().ratings.filter(rating => !rating.like).map(rating => rating.pid);
     return {like, dislike};
   }
+
+  addProfile({name}) {
+
+  }
+
+  removeProfile({name}) {
+
+  }
+
+  selectProfile({name}) {
+
+  }
+
 }
 
 export default new GlobalState();
