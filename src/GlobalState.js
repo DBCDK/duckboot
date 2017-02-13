@@ -1,8 +1,15 @@
+import request from 'superagent';
+
 class GlobalState {
   constructor() {
     this.listeners = [];
     this.state = {
-      ratings: []
+      ratings: [],
+      search: {
+        query: "",
+        searching: false,
+        data: []
+      }
     };
     this.history = [];
   }
@@ -17,6 +24,21 @@ class GlobalState {
   }
   listen(cb) {
     this.listeners.push(cb);
+  }
+
+  search(query) {
+    this.setState({search: {query: query, searching: true}});
+    request.post('http://localhost:3001/search')
+      .send(query)
+      .end((err, res) => {
+        if (res && res.text) {
+          const data = JSON.parse(res.text).data;
+          this.setState({search: {data, query: query.q, searching: false}})
+        }
+        else {
+          this.setState({search: {data: [], query: query.q, searching: false}})
+        }
+      });
   }
 
   addLike(element, value) {

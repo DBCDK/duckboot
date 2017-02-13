@@ -1,25 +1,6 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
-import {RateButtons} from './rate.component';
-
-function Element({element}) {
-  const {pid, title, creator} = element;
-  return (
-    <div id={pid} className="element">
-      <h2>{title}</h2>
-      <h3>{creator}</h3>
-      <RateButtons element={element} />
-    </div>
-  );
-}
-
-function SearcResult({result}) {
-  return (
-    <div className="search-result">
-      {result.map(element => <Element key={element.pid} element={element} />)}
-    </div>
-  )
-}
+import {ElementList} from './element.component';
 
 function NoResults({query}) {
   return (
@@ -60,6 +41,6 @@ export default class SearchResultContainer extends React.Component {
     else if (search.data.length === 0 && search.query) {
       return NoResults({query: search.query});
     }
-    return SearcResult({result: search.data || []})
+    return ElementList({list: search.data || []})
   }
 }

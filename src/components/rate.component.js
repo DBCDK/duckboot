@@ -1,5 +1,34 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
+import {ElementList} from './element.component';
+
+export class RatingsList extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      ratings: []
+    };
+    GlobalState.listen((state) => {
+      if (state.ratings !== this.state.ratings) {
+        this.setState({ratings: state.ratings});
+      }
+    });
+  }
+
+  render() {
+    return(
+      <div className="rating-lists">
+        <div className="likes">
+          <ElementList list={this.state.ratings.filter(rating => rating.like).map(rating => rating.element)} />
+        </div>
+        <div className="dislikes">
+          <ElementList list={this.state.ratings.filter(rating => !rating.like).map(rating => rating.element)} />
+        </div>
+      </div>
+    );
+  }
+}
+
 
 
 function Like({element, rating}) {
@@ -20,9 +49,10 @@ function DisLike({element, rating}) {
 export function RateButtons({element}) {
   const rating = GlobalState.getRating(element);
   return (
-    <div className="">
+    <div className="rate-button">
       <Like {...{element, rating}}/>
       <DisLike {...{element, rating}}/>
     </div>
   );
 }
+
