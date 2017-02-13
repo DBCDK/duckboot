@@ -1,7 +1,9 @@
 class GlobalState {
   constructor() {
     this.listeners = [];
-    this.state = {};
+    this.state = {
+      ratings: []
+    };
     this.history = [];
   }
   setState(newState) {
@@ -15,6 +17,24 @@ class GlobalState {
   }
   listen(cb) {
     this.listeners.push(cb);
+  }
+
+  addLike(element, value) {
+    this.removeLike(element);
+    const ratings = this.state.ratings.concat([{
+      pid: element.pid,
+      element,
+      like: value
+    }]);
+    this.setState({ratings})
+  }
+  removeLike(element) {
+    const ratings = this.state.ratings.filter(like => like.pid !== element.pid);
+    this.setState({ratings})
+  }
+
+  getRating(element) {
+    return this.state.ratings.filter(like => like.pid === element.pid)[0] || null;
   }
 }
 

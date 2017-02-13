@@ -1,12 +1,14 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
+import {RateButtons} from './rate.component';
 
-function Element({pid, title, creator}) {
-
+function Element({element}) {
+  const {pid, title, creator} = element;
   return (
     <div id={pid} className="element">
       <h2>{title}</h2>
       <h3>{creator}</h3>
+      <RateButtons element={element} />
     </div>
   );
 }
@@ -14,7 +16,7 @@ function Element({pid, title, creator}) {
 function SearcResult({result}) {
   return (
     <div className="search-result">
-      {result.map(element => <Element key={element.pid} {...element} />)}
+      {result.map(element => <Element key={element.pid} element={element} />)}
     </div>
   )
 }
