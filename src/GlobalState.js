@@ -4,6 +4,7 @@ class GlobalState {
   constructor() {
     this.listeners = [];
     this.state = {
+      recommendations: [],
       ratings: [],
       search: {
         query: "",
@@ -37,6 +38,22 @@ class GlobalState {
         }
         else {
           this.setState({search: {data: [], query: query.q, searching: false}})
+        }
+      });
+  }
+
+  recommend({like, dislike}) {
+    this.setState({recommendations: []});
+    request.post('http://localhost:3001/recommend')
+      .send({like, dislike})
+      .end((err, res) => {
+        if (res && res.text) {
+          const result = JSON.parse(res.text).result;
+          const elements = result.map(element => element[1]);
+          this.setState({recommendations: elements})
+        }
+        else {
+          this.setState({recommendations: []});
         }
       });
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Search from './components/search.container';
 import SearchResult from './components/searchResult.component';
 import {RatingsList} from './components/rate.component';
+import Recommendations from './components/recommendations.container';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
         <RatingsList />
         <Search/>
         <SearchResult />
+        <Recommendations />
       </div>
     );
   }
