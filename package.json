@@ -3,14 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "nodemon": "^1.11.0",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
+    "asyncawait": "^1.0.6",
+    "koa": "^2.0.0",
+    "koa-body": "^2.0.0",
+    "koa-convert": "^1.2.0",
+    "koa-router": "^7.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "superagent": "^3.4.1"
   },
   "scripts": {
+    "serve": "nodemon --exec node --no-stdin src/server/server.index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
