@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from './components/search.container';
 import SearchResult from './components/searchResult.component';
+import {RatingsList} from './components/rate.component';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <p className="app-intro">
           What should I read...?
         </p>
+        <RatingsList />
         <Search/>
         <SearchResult />
       </div>
