@@ -28,9 +28,9 @@ class GlobalState {
   }
 
   loadInitialState() {
+    // TODO make this a configuration
     request.get('settings.json')
       .end((err, res) => {
-        console.log(res);
         const initState = JSON.parse(res.text);
         const recommenders = initState.recommenders;
         this.setState({recommenders})
@@ -121,16 +121,18 @@ class GlobalState {
   }
 
   addProfile(profile) {
-    this.profiles.push(profile);
-    console.log(this.profiles);
+    profile.ratings = [];
+    const profiles = this.getState().profiles.concat([profile]);
+    this.setState({profiles})
   }
 
   removeProfile({name}) {
 
   }
 
-  selectProfile({name}) {
-
+  selectProfile(selectedProfile) {
+    const profile = this.getState().profiles.filter(profile => profile.name === selectedProfile.name)[0];
+    this.setState({profile});
   }
 
 }
