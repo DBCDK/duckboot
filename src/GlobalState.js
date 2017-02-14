@@ -3,23 +3,32 @@ import request from 'superagent';
 window.request = request;
 class GlobalState {
   constructor() {
-    this.listeners = [];
     this.state = {
       recommenders: [],
-      recommendations: [],
-      ratings: [],
+      profiles: [{
+          name: "test",
+          ratings: []
+        }],
+      profile: {},
       search: {
         query: "",
         searching: false,
         data: []
-      }
+      },
+      recommendations: [],
+      ratings: "<= profiles.selected.ratings"
     };
+    this.state.profile = this.state.profiles[0];
+
+    this.listeners = [];
+    this.profiles = [];
     this.history = [];
 
     this.loadInitialState();
   }
 
   loadInitialState() {
+    // TODO make this a configuration
     request.get('settings.json')
       .end((err, res) => {
         const initState = JSON.parse(res.text);
@@ -32,6 +41,10 @@ class GlobalState {
     this.history.push(Object.assign({}, this.state));
     this.state = Object.assign({}, this.state, newState);
     this.onChange();
+  }
+
+  getState() {
+    return this.state;
   }
 
   onChange() {
@@ -76,28 +89,52 @@ class GlobalState {
 
   addLike(element, value) {
     this.removeLike(element);
-    const ratings = this.state.ratings.concat([{
+    const profile = this.getProfile();
+    profile.ratings = profile.ratings.concat([{
       pid: element.pid,
       element,
       like: value
     }]);
-    this.setState({ratings})
+    this.setState({profile})
   }
 
   removeLike(element) {
-    const ratings = this.state.ratings.filter(like => like.pid !== element.pid);
-    this.setState({ratings})
+    const profile = this.getProfile();
+    profile.ratings = profile.ratings.filter(like => like.pid !== element.pid);
+    this.setState({profile})
   }
 
   getRating(element) {
-    return this.state.ratings.filter(like => like.pid === element.pid)[0] || null;
+    const profile = this.getProfile();
+    return profile.ratings.filter(like => like.pid === element.pid)[0] || null;
   }
 
   getRatings() {
-    const like = this.state.ratings.filter(rating => rating.like).map(rating => rating.pid);
-    const dislike = this.state.ratings.filter(rating => !rating.like).map(rating => rating.pid);
+    const profile = this.getProfile();
+    const like = profile.ratings.filter(rating => rating.like).map(rating => rating.pid);
+    const dislike = profile.ratings.filter(rating => !rating.like).map(rating => rating.pid);
     return {like, dislike};
   }
+
+  getProfile() {
+    return this.getState().profile;
+  }
+
+  addProfile(profile) {
+    profile.ratings = [];
+    const profiles = this.getState().profiles.concat([profile]);
+    this.setState({profiles})
+  }
+
+  removeProfile({name}) {
+
+  }
+
+  selectProfile(selectedProfile) {
+    const profile = this.getState().profiles.filter(profile => profile.name === selectedProfile.name)[0];
+    this.setState({profile});
+  }
+
 }
 
 export default new GlobalState();

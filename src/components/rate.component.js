@@ -8,9 +8,9 @@ export class RatingsList extends React.Component {
     this.state = {
       ratings: []
     };
-    GlobalState.listen((state) => {
-      if (state.ratings !== this.state.ratings) {
-        this.setState({ratings: state.ratings});
+    GlobalState.listen(({profile}) => {
+      if (profile.ratings !== this.state.ratings) {
+        this.setState({ratings: profile.ratings});
       }
     });
   }
