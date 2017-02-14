@@ -22,7 +22,7 @@ export default class Search extends React.Component {
   render() {
     return(
       <form className="search" action="" onSubmit={this.onSubmit}>
-        <input ref={ref => this.input = ref} type="text" defaultValue="hest" placeholder="Søg på f.eks. min kamp"/>
+        <input className="underline" ref={ref => this.input = ref} type="text" defaultValue="hest" placeholder="Søg på f.eks. min kamp"/>
       </form>
     );
   }

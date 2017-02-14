@@ -18,11 +18,11 @@ export class RatingsList extends React.Component {
   render() {
     return(
       <div className="rating-lists">
-        <div className="likes">
-          <ElementList list={this.state.ratings.filter(rating => rating.like).map(rating => rating.element)} />
+        <div className="likes mb2">
+          <ElementList header="Kan godt lide" list={this.state.ratings.filter(rating => rating.like).map(rating => rating.element)} />
         </div>
         <div className="dislikes">
-          <ElementList list={this.state.ratings.filter(rating => !rating.like).map(rating => rating.element)} />
+          <ElementList header="Kan ikke lide" list={this.state.ratings.filter(rating => !rating.like).map(rating => rating.element)} />
         </div>
       </div>
     );

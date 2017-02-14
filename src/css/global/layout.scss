@@ -1,0 +1,31 @@
+.flex {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+.container {
+  margin: 2rem;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.baseline {
+  align-items: baseline;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+  &.right {
+    top: 0;
+    right: 0;
+  }
+}

@@ -1,11 +1,11 @@
 import GlobalState from '../GlobalState';
 import React from 'react';
-import './profile.container.css';
 
 function ProfileView(profile) {
   const select = (e) => {
     e.preventDefault();
     GlobalState.selectProfile(profile)
+    GlobalState.goto('search');
   };
   const remove = (e) => {
     e.preventDefault();

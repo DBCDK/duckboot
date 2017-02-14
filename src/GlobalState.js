@@ -4,11 +4,14 @@ window.request = request;
 class GlobalState {
   constructor() {
     this.state = {
+      view: 'profileSelect',
       recommenders: [],
-      profiles: [{
+      profiles: [
+        {
           name: "test",
           ratings: []
-        }],
+        }
+      ],
       profile: {},
       search: {
         query: "",
@@ -134,6 +137,10 @@ class GlobalState {
   selectProfile(selectedProfile) {
     const profile = this.getState().profiles.filter(profile => profile.name === selectedProfile.name)[0];
     this.setState({profile});
+  }
+
+  goto(view) {
+    this.setState({view});
   }
 
 }

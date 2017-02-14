@@ -12,9 +12,10 @@ export function Element({element}) {
   );
 }
 
-export function ElementList({list}) {
+export function ElementList({header, list}) {
   return (
     <div className="search-result">
+      {(list.length && header && <h3>{header}</h3>) || ''}
       {list.map(element => <Element key={element.pid} element={element} />)}
     </div>
   )

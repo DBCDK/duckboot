@@ -8,7 +8,7 @@ export function RecommenderButton({url, name}) {
     GlobalState.recommend(url, GlobalState.getRatings());
   };
   return (
-    <a onClick={onClick}>{name}</a>
+    <a href="#" className="button submit" onClick={onClick}>{name}</a>
   );
 }
 
@@ -27,7 +27,7 @@ export class RecommenderButtons extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="buttons">
         {this.state.recommenders.map(recommender => <RecommenderButton key={recommender.url} {...recommender} />)}
       </div>
     );

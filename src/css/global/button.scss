@@ -1,0 +1,65 @@
+button, .button {
+  @include button-reset();
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 200ms ease-in;
+  cursor: pointer;
+  min-width: 100px;
+  &.submit {
+    background-color: $green;
+    color: white;
+    &:focus {
+      outline: none;
+      background-color: $blue;
+    }
+    &:hover{
+      background-color: darken($green, 5%);
+    }
+  }
+  &.remove {
+    background-color: $red;
+    color: white;
+  }
+  &:disabled{
+    background-color: rgba($header-color, 0.5);
+    color: rgba(white, 0.8);
+    box-shadow: none;
+    &:hover {
+      background-color: rgba($header-color, 0.8);
+    }
+  }
+  &.small {
+    min-width: inherit;
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+.buttons{
+  @include gutter-children-margin();
+}
+.text-button {
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 200ms ease-in;
+  cursor: pointer;
+  padding: 2rem;
+  background-color: $background-light;
+  width: 50%;
+  text-decoration: none;
+  text-align: center;
+
+
+  .button-header {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: gutter(1);
+  }
+  &:hover, &:focus {
+    outline: none;
+    background-color: $green;
+  }
+}
+
+.btn-group {
+
+}
