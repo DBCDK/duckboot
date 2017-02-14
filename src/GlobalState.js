@@ -126,8 +126,9 @@ class GlobalState {
     this.setState({profiles})
   }
 
-  removeProfile({name}) {
-
+  deleteProfile(selectedProfile) {
+    const profiles = this.getState().profiles.filter(profile => profile.name !== selectedProfile.name);
+    this.setState({profiles});
   }
 
   selectProfile(selectedProfile) {

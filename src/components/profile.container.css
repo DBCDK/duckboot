@@ -1,0 +1,21 @@
+.profile {
+  margin: 1rem;
+  padding: 2rem;
+  border: 2px solid;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  flex-grow: 0;
+  flex-shrink: 0; }
+
+input.underline {
+  width: 100%;
+  display: inline-block;
+  border: none;
+  outline: 0;
+  border-bottom: 2px solid #222;
+  transition: all 200ms;
+  font-size: medium; }
+
+input.underline:focus {
+  border-bottom-color: darkblue; }

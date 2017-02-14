@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "node-sass": "^4.5.0",
     "nodemon": "^1.11.0",
     "react-scripts": "0.8.5"
   },
@@ -18,9 +19,12 @@
     "superagent": "^3.4.1"
   },
   "scripts": {
+    "build-css": "node-sass src/ -o src/",
+    "watch-css": "npm run build-css && node-sass src/ -o src/ --watch",
     "serve": "nodemon --exec node --no-stdin src/server/server.index.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

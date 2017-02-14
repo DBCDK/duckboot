@@ -10,8 +10,8 @@
     "method": "post"
   },
   {
-    "name": "aquabine",
-    "url": "http://0.recommender-aqua.xp.staging.mcp1-proxy.dbc.dk/recommender/loan",
+    "name": "aquapop",
+    "url": "http://0.recommender-aqua.xp.staging.mcp1-proxy.dbc.dk/recommender/pop",
     "method": "post"
   }
 ]
