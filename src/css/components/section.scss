@@ -12,7 +12,7 @@
     a {
       position: absolute;
       right: 0;
-      bottom: 0;
+      bottom: 5px;
       font-size: 1rem;
       text-transform: uppercase;
     }
@@ -40,10 +40,11 @@
 
 .search {
   position: relative;
-  img {
+  img, svg {
     position: absolute;
     right: 0;
     top: 0;
     width: 2rem;
+    height: 2rem;
   }
 }

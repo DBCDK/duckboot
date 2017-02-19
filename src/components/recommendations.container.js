@@ -1,6 +1,7 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
 import {ElementList} from './element.component';
+import JsonView from './jsonView.container';
 
 export function RecommenderButton(recommender) {
   const onClick = (e) => {
@@ -40,18 +41,59 @@ export default class Recommender extends React.Component {
   constructor() {
     super();
     this.state = {
-      recommendations: []
+      recommendations: GlobalState.getState().recommendations,
     };
+    this.state.profileUpdated = JSON.stringify(GlobalState.getRatings()) !== JSON.stringify(this.state.recommendations.request);
   }
 
   componentDidMount() {
-    GlobalState.listen(({recommendations}) => {
-        this.setState({recommendations});
+    this.listener = GlobalState.listen(({recommendations}) => {
+      const profileUpdated = JSON.stringify(GlobalState.getRatings()) !== JSON.stringify(recommendations.request);
+        this.setState({recommendations, profileUpdated});
     });
   }
 
-  render() {
-    return ElementList({list: this.state.recommendations});
+  componentWillUnmount() {
+    GlobalState.unListen(this.listener);
   }
 
+  getRecommendations = () => {
+    const recommender = this.state.recommendations.recommender;
+    GlobalState.recommend(recommender, GlobalState.getRatings());
+  };
+
+  profileUpdated() {
+    return this.state.profileUpdated && <p>Profilen er opdateret. <a href="#" onClick={this.getRecommendations}>Opdater anbefalinger</a></p>;
+  }
+  render() {
+    return(
+      <div>
+        {this.profileUpdated()}
+        {ElementList({list: this.state.recommendations.data || []})}
+      </div>
+    );
+
+  }
 }
+
+export class RecommenderJson extends Recommender {
+  render() {
+    return (
+      <div>
+        {this.profileUpdated()}
+        <h3>url</h3>
+        <div className="mb2">
+          {JsonView(this.state.recommendations.recommender.url)}
+        </div>
+        <h3>Request</h3>
+        <div className="mb2">
+          {JsonView(this.state.recommendations.request)}
+        </div>
+        <h3>Response</h3>
+        {JsonView(this.state.recommendations.response)}
+      </div>
+    );
+    //return ElementList({list: this.state.recommendations.data || []});
+  }
+}
+

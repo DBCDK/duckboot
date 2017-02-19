@@ -15,7 +15,12 @@ class GlobalState {
       },
       saved: [],
       searchUrl: "",
-      recommendations: []
+      recommendations: {
+        url: '',
+        data: [],
+        request: {},
+        response: {}
+      }
     };
 
     this.state = Object.assign(defaultState, this.getLocalStorage());
@@ -95,18 +100,25 @@ class GlobalState {
       }
       return rec;
     });
-    this.setState({recommendations: [], recommenders});
+    const recommendations = {
+      recommender: recommender,
+      data: [],
+      request: {like, dislike},
+      response: {}
+    }
+    this.setState({recommendations, recommenders});
     request.post(recommender.url)
       .send({like, dislike})
       .end((err, res) => {
         if (res && res.text) {
           const result = JSON.parse(res.text).result;
-          const elements = result.map(element => element[1]);
-          this.setState({recommendations: elements})
+          recommendations.response = result;
+          recommendations.data = result.map(element => element[1]);
         }
         else {
-          this.setState({recommendations: []});
+          recommendations.response = err;
         }
+        this.setState({recommendations})
       });
   }
 

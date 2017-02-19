@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Search from './components/search.container';
 import SearchResult from './components/searchResult.component';
-import {RatingsList} from './components/rate.component';
-import Recommendations, {RecommenderButtons} from './components/recommendations.container';
+import {RatingsList, RatingsListJson} from './components/rate.component';
+import Recommendations, {RecommenderButtons, RecommenderJson} from './components/recommendations.container';
 import Profiles, {CurrentProfile} from './components/profile.container';
 import SavedList from './components/savedList.container';
 import GlobalState from './GlobalState';
@@ -27,34 +27,55 @@ class SearchPage extends React.Component {
   constructor() {
     super();
     this.state = {
-      search: true
+      search: true,
+      recommender: true,
+      profile: true
     };
   }
 
-  toggleState = () => {
+  toggleSearch = () => {
     this.setState({search: !this.state.search});
+  };
+  toggleRecommenders = () => {
+    this.setState({recommender: !this.state.recommender});
+  };
+
+  toggleProfile = () => {
+    this.setState({profile: !this.state.profile});
   };
 
   render() {
     return (
       <div className="search-page flex">
         {this.state.search &&
-        <Section title={<span>Søg<a href="#" onClick={this.toggleState}>Vis gemte</a></span>} Header={<Search />}>
+        <Section title={<span>Søg<a href="#" onClick={this.toggleSearch}>Vis gemte</a></span>} Header={<Search />}>
           <SearchResult />
         </Section>
         ||
-        <Section title={<span>Gemte poster<a href="#" onClick={this.toggleState}>Søg</a></span>} Header="">
+        <Section title={<span>Gemte poster<a href="#" onClick={this.toggleSearch}>Søg</a></span>} Header="">
           <SavedList />
         </Section>
-
         }
-        <Section title="Profil" Header={<CurrentProfile />}>
+        {this.state.profile &&
+        <Section title={<span>Profil<a href="#" onClick={this.toggleProfile}>Vis JSON</a></span>} Header={<CurrentProfile />}>
           <RatingsList />
         </Section>
-        <Section title="Anbefalinger" Header={<RecommenderButtons />}>
+        ||
+        <Section title={<span>Profil<a href="#" onClick={this.toggleProfile}>Skjul JSON</a></span>} Header={<CurrentProfile />}>
+          <RatingsListJson />
+        </Section>
+        }
+        {this.state.recommender &&
+        <Section title={<span>Anbefalinger<a href="#" onClick={this.toggleRecommenders}>Vis JSON</a></span>} Header={<RecommenderButtons />}>
           <Recommendations />
         </Section>
+        ||
+        <Section title={<span>Anbefalinger<a href="#" onClick={this.toggleRecommenders}>Skjul JSON</a></span>} Header={<RecommenderButtons />}>
+          <RecommenderJson />
+        </Section>
+        }
       </div>
+
     );
   }
 }

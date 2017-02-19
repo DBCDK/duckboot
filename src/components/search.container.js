@@ -1,6 +1,6 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
-import search from '../assets/search.svg';
+import {SearchSvg} from './svg.container';
 
 export default class Search extends React.Component {
   constructor() {
@@ -25,7 +25,7 @@ export default class Search extends React.Component {
       <div className="black-box">
         <form className="search" action="" onSubmit={this.onSubmit}>
           <input className="" ref={ref => this.input = ref} type="text" defaultValue="hest" placeholder="Søg på title eller forfatter"/>
-          <img src={search} role="presentation"/>
+          <SearchSvg />
         </form>
       </div>
     );

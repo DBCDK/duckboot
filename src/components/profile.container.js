@@ -37,7 +37,6 @@ function ProfileList({list, children}) {
       </section>
     </div>
   )
-
 }
 
 function CreateProfile() {
@@ -123,7 +122,6 @@ export class CurrentProfile extends React.Component {
         <div className="ratings mb1">
           {this.state.profile.ratings.filter(rating => rating.like).length} likes
           , {this.state.profile.ratings.filter(rating => !rating.like).length} dislikes
-          , {(this.state.profile.saved || []).length} gemte
         </div>
         <div>
           <a href="#" onClick={selectProfile}>Vælg anden profil</a>

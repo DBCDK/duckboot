@@ -1,15 +1,14 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
 import {ElementList} from './element.component';
-import minus from '../assets/minus.svg';
-import plus from '../assets/plus.svg';
-import star from '../assets/star.svg';
+import JsonView from './jsonView.container';
+import {PlusSvg, MinusSvg, StarSvg} from './svg.container';
 
 export class RatingsList extends React.Component {
   constructor() {
     super();
     this.state = {
-      ratings: []
+      ratings: GlobalState.getProfile().ratings
     };
   }
 
@@ -17,6 +16,10 @@ export class RatingsList extends React.Component {
     GlobalState.listen(({profile}) => {
       this.setState({ratings: profile.ratings});
     });
+  }
+
+  componentWillUnmount() {
+    GlobalState.unListen(this.listener);
   }
 
   render() {
@@ -30,6 +33,34 @@ export class RatingsList extends React.Component {
           <ElementList header="Kan ikke lide"
                        list={this.state.ratings.filter(rating => !rating.like).map(rating => rating.element)}/>
         </div>
+      </div>
+    );
+  }
+}
+
+export class RatingsListJson extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      ratings: GlobalState.getRatings()
+    };
+  }
+
+  componentDidMount() {
+    GlobalState.listen(({profile}) => {
+      this.setState({ratings: GlobalState.getRatings()});
+    });
+  }
+
+  componentWillUnmount() {
+    GlobalState.unListen(this.listener);
+  }
+
+  render() {
+    return (
+      <div className="rating-lists">
+          <h3>Profil JSON</h3>
+          <JsonView {...this.state.ratings} />
       </div>
     );
   }
@@ -50,7 +81,7 @@ function Like({element, rating}) {
   return (
     <div className={`like rate-button ${color}`} onClick={onCLick}>
         <span className="icon medium round">
-          <img src={plus} role="presentation"/>
+          <PlusSvg />
         </span>
       <span className="icon-description">like</span>
     </div>
@@ -72,7 +103,7 @@ function DisLike({element, rating}) {
   return (
     <div className={`dislike rate-button ${color}`} onClick={onCLick}>
       <span className="icon medium round">
-        <img src={minus} role="presentation"/>
+        <MinusSvg />
       </span>
       <span className="icon-description">dislike</span>
     </div>
@@ -93,7 +124,7 @@ function Save({element, isSaved}) {
   return (
     <div className={`dislike rate-button ${color}`} onClick={onCLick}>
         <span className="icon medium round">
-          <img src={star} role="presentation"/>
+          <StarSvg />
         </span>
       <span className="icon-description">Gem</span>
     </div>
