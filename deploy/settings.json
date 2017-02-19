@@ -1,0 +1,13 @@
+{
+  "recommenders": [
+    {
+      "name": "Aquamend",
+      "url": "http://xptest.dbc.dk/duckboots/api/recommend/loan"
+    },
+    {
+      "name": "Aquabine",
+      "url": "http://xptest.dbc.dk/duckboots/api/recommend/pop"
+    }
+  ],
+  "search": "http://xptest.dbc.dk/duckboots/api/search"
+}

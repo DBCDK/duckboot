@@ -4,14 +4,18 @@ button, .button {
   transition: all 200ms ease-in;
   cursor: pointer;
   min-width: 100px;
-  &.submit {
+  &.active {
     background-color: $green;
+    color: white;
+  }
+  &.submit {
+    background-color: $text-color;
     color: white;
     &:focus {
       outline: none;
       background-color: $blue;
     }
-    &:hover{
+    &:hover {
       background-color: darken($green, 5%);
     }
   }
@@ -19,7 +23,7 @@ button, .button {
     background-color: $red;
     color: white;
   }
-  &:disabled{
+  &:disabled {
     background-color: rgba($header-color, 0.5);
     color: rgba(white, 0.8);
     box-shadow: none;
@@ -34,9 +38,10 @@ button, .button {
   }
 }
 
-.buttons{
+.buttons {
   @include gutter-children-margin();
 }
+
 .text-button {
   border-radius: 3px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -47,7 +52,6 @@ button, .button {
   width: 50%;
   text-decoration: none;
   text-align: center;
-
 
   .button-header {
     font-size: 18px;

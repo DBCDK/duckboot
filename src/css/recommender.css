@@ -1,9 +1,7 @@
 .recommender-buttons {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  a {
+  flex-wrap: wrap; }
+  .recommender-buttons a {
     flex-grow: 1;
-    margin: 1rem;
-  }
-}
+    margin: 1rem; }

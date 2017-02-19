@@ -1,0 +1,80 @@
+.icon {
+  display: inline-block;
+  img {
+    width: 100%;
+  }
+  &.medium {
+    width: 2rem;
+    height: 2rem;
+  }
+  &.round {
+    padding: 3px;
+    border-radius: 50%;
+  }
+  &.grey {
+    background-color: #464646;
+  }
+  &.green {
+    background-color: $green;
+  }
+  &.red {
+    background-color: $red;
+  }
+  &.yellow {
+    background-color: $blue;
+  }
+}
+
+.green {
+  color: $green;
+}
+.red {
+  color: $red;
+}
+.yellow {
+  color: $blue;
+}
+.icon-description {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+
+}
+
+.rate-buttons {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rate-button {
+  cursor: pointer;
+  margin-left: 1rem;
+  text-align: center;
+  &.grey {
+    .icon {
+      background-color: #464646;
+    }
+    color: #464646;
+  }
+  &.green {
+    .icon {
+      background-color: $green;
+    }
+    color: green;
+  }
+  &.red {
+    .icon {
+      background-color: $red;
+    }
+    color: $red;
+  }
+  &.yellow {
+    .icon {
+      background-color: $blue;
+    }
+    color: $blue;
+  }
+}

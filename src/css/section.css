@@ -1,0 +1,35 @@
+.section {
+  box-sizing: border-box;
+  width: 33%;
+  flex-grow: 0;
+  flex-shrink: 0; }
+  .section + .section {
+    padding-left: 1rem; }
+  .section h2 {
+    position: relative; }
+    .section h2 a {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      font-size: 1rem;
+      text-transform: uppercase; }
+  .section .header {
+    width: 100%;
+    margin-bottom: 2rem; }
+
+.black-box {
+  background-color: #222;
+  padding: 1rem;
+  color: white;
+  box-shadow: 1px 1px 5px rgba(170, 170, 170, 0.35);
+  border-radius: 2px; }
+  .black-box a {
+    color: white; }
+
+.search {
+  position: relative; }
+  .search img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2rem; }

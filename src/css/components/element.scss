@@ -1,5 +1,7 @@
 .element {
-  border: 1px solid $background-light;
   padding: 1rem;
   margin: 1rem 0;
+  background-color: white;
+  box-shadow: 1px 1px 5px rgba(#aaa, 0.35);
+  border-radius: 2px;
 }

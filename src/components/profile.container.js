@@ -13,16 +13,14 @@ function ProfileView(profile) {
   };
   return (
     <article className="profile">
-      <h2 className="">{profile.name}</h2>
-      <div className="ratings mb2">
-        {profile.ratings.filter(rating => rating.like).length} likes,
-        {profile.ratings.filter(rating => !rating.like).length} dislikes,
+      <h2 className="mb1">{profile.name}</h2>
+      <div className="ratings mb1">
+        {profile.ratings.filter(rating => rating.like).length} likes
+        , {profile.ratings.filter(rating => !rating.like).length} dislikes
       </div>
-      <div>
-        <a href="#" onClick={remove}>Slet profil</a>
-      </div>
-      <div>
-        <a href="#" onClick={select}>Vælg profil</a>
+      <div className="profile-buttons">
+        <a className="button remove" href="#" onClick={remove}>Slet profil</a>
+        <a className="button submit" href="#" onClick={select}>Vælg profil</a>
       </div>
 
     </article>
@@ -69,20 +67,23 @@ function CreateProfile() {
 
 }
 
-
 export default class Profiles extends React.Component {
   constructor() {
     super();
-    this.state = {
-      profiles: [],
-      profile: {}
-    };
-    GlobalState.listen(({profiles, profile}) => {
-      // TODO Fix ugly hack!
-      if (profiles !== this.state.profiles || profile.ratings !== this.state.profile.ratings) {
-        this.setState({profiles, profile: Object.assign({}, profile)});
-      }
+    const {profile, profiles} = GlobalState.getState();
+    this.state = {profile, profiles};
+    this.listener;
+  }
+
+  componentDidMount() {
+    const {profile, profiles} = GlobalState.getState();
+    this.listener = GlobalState.listen(({profiles, profile}) => {
+      this.setState({profiles, profile});
     });
+  }
+
+  componentWillUnmount() {
+    GlobalState.unListen(this.listener);
   }
 
   render() {
@@ -93,6 +94,42 @@ export default class Profiles extends React.Component {
         </ProfileList>
       </div>
     )
+  }
+}
+
+export class CurrentProfile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      profile: GlobalState.getState().profile || {}
+    };
+  }
+
+  componentDidMount() {
+    GlobalState.listen(({profile}) => {
+      if (profile !== this.state.profile || profile.ratings !== this.state.profile.ratings) {
+        this.setState({profile});
+      }
+    });
+  }
+
+  render() {
+    const selectProfile = () => {
+      GlobalState.goto('selectProfile');
+    };
+    return (
+      <article className="black-box">
+        <h2 className="mb1">{this.state.profile.name}</h2>
+        <div className="ratings mb1">
+          {this.state.profile.ratings.filter(rating => rating.like).length} likes
+          , {this.state.profile.ratings.filter(rating => !rating.like).length} dislikes
+          , {(this.state.profile.saved || []).length} gemte
+        </div>
+        <div>
+          <a href="#" onClick={selectProfile}>Vælg anden profil</a>
+        </div>
+      </article>
+    );
   }
 }
 

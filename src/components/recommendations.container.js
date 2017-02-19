@@ -2,13 +2,13 @@ import React from 'react';
 import GlobalState from '../GlobalState';
 import {ElementList} from './element.component';
 
-export function RecommenderButton({url, name}) {
+export function RecommenderButton(recommender) {
   const onClick = (e) => {
     e.preventDefault();
-    GlobalState.recommend(url, GlobalState.getRatings());
+    GlobalState.recommend(recommender, GlobalState.getRatings());
   };
   return (
-    <a href="#" className="button submit" onClick={onClick}>{name}</a>
+    <a href="#" className={`button ${recommender.isActive && 'active' || 'submit'}`} onClick={onClick}>{recommender.name}</a>
   );
 }
 
@@ -19,16 +19,18 @@ export class RecommenderButtons extends React.Component {
     this.state = {
       recommenders: []
     };
+  }
+
+  componentDidMount() {
     GlobalState.listen(({recommenders}) => {
-      if (recommenders !== this.state.recommenders) {
-        this.setState({recommenders});
-      }
+      this.setState({recommenders});
     });
   }
+
   render() {
     return (
-      <div className="buttons">
-        {this.state.recommenders.map(recommender => <RecommenderButton key={recommender.url} {...recommender} />)}
+      <div className="recommender-buttons">
+        {this.state.recommenders.map(recommender => <RecommenderButton key={recommender.url + recommender.name} {...recommender} />)}
       </div>
     );
   }
@@ -40,10 +42,11 @@ export default class Recommender extends React.Component {
     this.state = {
       recommendations: []
     };
+  }
+
+  componentDidMount() {
     GlobalState.listen(({recommendations}) => {
-      if (recommendations !== this.state.recommendations) {
         this.setState({recommendations});
-      }
     });
   }
 

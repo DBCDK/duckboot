@@ -1,7 +1,7 @@
 [
   {
     "name": "search",
-    "url": "http://xp-p02.dbc.dk:9918/search",
+    "url": "http://xptest.dbc.dk/duckboots/api/search",
     "method": "post"
   },
   {
