@@ -1,12 +1,16 @@
 {
   "recommenders": [
     {
-      "name": "Aquamend",
+      "name": "aqua loan",
       "url": "http://xptest.dbc.dk/duckboots/api/recommend/loan"
     },
     {
-      "name": "Aquabine",
-      "url": "http://xptest.dbc.dk/duckboots/api/recommend/pop"
+      "name": "aqua new",
+      "url": "http://xptest.dbc.dk/duckboots/api/recommend/new"
+    },
+    {
+      "name": "aqua cosim",
+      "url": "http://xptest.dbc.dk/duckboots/api/recommend-cosim"
     }
   ],
   "search": "http://xptest.dbc.dk/duckboots/api/search"
