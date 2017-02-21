@@ -4,6 +4,7 @@ window.request = request;
 class GlobalState {
   constructor() {
     const defaultState = {
+      token: "5d34b46edd8e0f1ec358602cc23a2ce875c1f64b",
       view: 'profileSelect',
       recommenders: [],
       profiles: [],
@@ -71,6 +72,7 @@ class GlobalState {
     this.listeners.push(cb);
     return cb;
   }
+
   unListen(cb) {
     this.listeners = this.listeners.filter(callback => callback !== cb);
   }
@@ -82,6 +84,8 @@ class GlobalState {
       .end((err, res) => {
         if (res && res.text) {
           const data = JSON.parse(res.text).data;
+          const pids = data.map(post => post.pid);
+          this.getCoverImage(pids, 'search');
           this.setState({search: {data, query: query.q, searching: false}})
         }
         else {
@@ -105,7 +109,7 @@ class GlobalState {
       data: [],
       request: {like, dislike},
       response: {}
-    }
+    };
     this.setState({recommendations, recommenders});
     request.post(recommender.url)
       .send({like, dislike})
@@ -119,6 +123,29 @@ class GlobalState {
           recommendations.response = err;
         }
         this.setState({recommendations})
+      });
+  }
+
+  getCoverImage(list, type) {
+    console.log({access_token: this.state.token, pids: list});
+    request.get('https://openplatform.dbc.dk/v1/work')
+      .query({access_token: this.state.token, pids: list, fields:['pid', 'coverUrlThumbnail']})
+      .end((err, res) => {
+        const {data} = JSON.parse(res.text);
+        const images = data.map(element => {
+          return {
+            pid: element.pid[0],
+            image: element.coverUrlThumbnail && element.coverUrlThumbnail[0]
+          }
+        });
+        console.log(this.getProfile(), type);
+        const elements = this.getState()[type].map(element => {
+          const image = images.filter(image => image.pid === element.pid);
+          if (image && image.image) {
+            element.image = image.image;
+          }
+        });
+        this.setState({[type]: elements});
       });
   }
 
@@ -154,8 +181,6 @@ class GlobalState {
     const saved = this.getState().saved || [];
     return saved.filter(saved => saved.pid === element.pid).length > 0;
   }
-
-
 
   getRating(element) {
     const profile = this.getProfile();
