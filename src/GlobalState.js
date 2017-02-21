@@ -3,22 +3,27 @@ import request from 'superagent';
 window.request = request;
 class GlobalState {
   constructor() {
-    this.state = {
+    const defaultState = {
+      view: 'profileSelect',
       recommenders: [],
-      profiles: [{
-          name: "test",
-          ratings: []
-        }],
+      profiles: [],
       profile: {},
       search: {
         query: "",
         searching: false,
         data: []
       },
-      recommendations: [],
-      ratings: "<= profiles.selected.ratings"
+      saved: [],
+      searchUrl: "",
+      recommendations: {
+        url: '',
+        data: [],
+        request: {},
+        response: {}
+      }
     };
-    this.state.profile = this.state.profiles[0];
+
+    this.state = Object.assign(defaultState, this.getLocalStorage());
 
     this.listeners = [];
     this.profiles = [];
@@ -27,24 +32,34 @@ class GlobalState {
     this.loadInitialState();
   }
 
+  getLocalStorage() {
+    const storageString = localStorage.getItem('Duckboots State');
+    return (storageString && JSON.parse(storageString)) || {};
+  }
+
+  setLocalStorage(state) {
+    localStorage.setItem('Duckboots State', JSON.stringify(state));
+  }
+
   loadInitialState() {
     // TODO make this a configuration
     request.get('settings.json')
       .end((err, res) => {
         const initState = JSON.parse(res.text);
-        const recommenders = initState.recommenders;
-        this.setState({recommenders})
+        const {recommenders, search} = initState;
+        this.setState({recommenders, searchUrl: search});
       });
   }
 
   setState(newState) {
     this.history.push(Object.assign({}, this.state));
     this.state = Object.assign({}, this.state, newState);
+    this.setLocalStorage(this.state);
     this.onChange();
   }
 
   getState() {
-    return this.state;
+    return Object.assign({}, this.state);
   }
 
   onChange() {
@@ -54,11 +69,15 @@ class GlobalState {
 
   listen(cb) {
     this.listeners.push(cb);
+    return cb;
+  }
+  unListen(cb) {
+    this.listeners = this.listeners.filter(callback => callback !== cb);
   }
 
   search(query) {
     this.setState({search: {query: query, searching: true}});
-    request.post('http://localhost:3001/search')
+    request.post(this.state.searchUrl)
       .send(query)
       .end((err, res) => {
         if (res && res.text) {
@@ -71,19 +90,35 @@ class GlobalState {
       });
   }
 
-  recommend(url, {like, dislike}) {
-    this.setState({recommendations: []});
-    request.post(url)
+  recommend(recommender, {like, dislike}) {
+    const recommenders = this.getState().recommenders.map(rec => {
+      if (rec.name === recommender.name && rec.url === recommender.url) {
+        rec.isActive = true;
+      }
+      else {
+        rec.isActive = false;
+      }
+      return rec;
+    });
+    const recommendations = {
+      recommender: recommender,
+      data: [],
+      request: {like, dislike},
+      response: {}
+    }
+    this.setState({recommendations, recommenders});
+    request.post(recommender.url)
       .send({like, dislike})
       .end((err, res) => {
         if (res && res.text) {
           const result = JSON.parse(res.text).result;
-          const elements = result.map(element => element[1]);
-          this.setState({recommendations: elements})
+          recommendations.response = result;
+          recommendations.data = result.map(element => element[1]);
         }
         else {
-          this.setState({recommendations: []});
+          recommendations.response = err;
         }
+        this.setState({recommendations})
       });
   }
 
@@ -95,14 +130,32 @@ class GlobalState {
       element,
       like: value
     }]);
-    this.setState({profile})
+    this.setState({profile: Object.assign({}, profile)})
   }
 
   removeLike(element) {
     const profile = this.getProfile();
     profile.ratings = profile.ratings.filter(like => like.pid !== element.pid);
-    this.setState({profile})
+    this.setState({profile: Object.assign({}, profile)})
   }
+
+  save(element) {
+    const savedInState = this.getState().saved || [];
+    const saved = savedInState.concat([element]);
+    this.setState({saved})
+  }
+
+  removeSaved(element) {
+    const saved = this.getState().saved.filter(saved => saved.pid !== element.pid);
+    this.setState({saved})
+  }
+
+  isSaved(element) {
+    const saved = this.getState().saved || [];
+    return saved.filter(saved => saved.pid === element.pid).length > 0;
+  }
+
+
 
   getRating(element) {
     const profile = this.getProfile();
@@ -117,7 +170,7 @@ class GlobalState {
   }
 
   getProfile() {
-    return this.getState().profile;
+    return this.state.profiles.filter(profile => profile.name === this.state.profile.name)[0];
   }
 
   addProfile(profile) {
@@ -126,13 +179,18 @@ class GlobalState {
     this.setState({profiles})
   }
 
-  removeProfile({name}) {
-
+  deleteProfile(selectedProfile) {
+    const profiles = this.getState().profiles.filter(profile => profile.name !== selectedProfile.name);
+    this.setState({profiles});
   }
 
   selectProfile(selectedProfile) {
     const profile = this.getState().profiles.filter(profile => profile.name === selectedProfile.name)[0];
     this.setState({profile});
+  }
+
+  goto(view) {
+    this.setState({view});
   }
 
 }

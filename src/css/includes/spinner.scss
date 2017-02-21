@@ -1,0 +1,13 @@
+@mixin spinner($size: 100%, $border: 3px, $color: $header-color, $speed: 2s) {
+  border: $border solid rgba(white, 0.1);
+  border-top: $border solid $color;
+  border-radius: 50%;
+  width: $size;
+  height: $size;
+  animation: spin $speed linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

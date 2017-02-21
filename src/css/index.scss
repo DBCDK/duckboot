@@ -1,0 +1,37 @@
+@import 'includes/buttons';
+@import 'includes/flex';
+@import 'includes/gutter';
+@import 'includes/spacer';
+@import 'includes/spinner';
+
+@import "global/settings.scss";
+@import "global/resets";
+@import "global/typography";
+@import "global/layout.scss";
+@import "global/utils";
+@import "global/button";
+
+@import "components/profile.container";
+@import "components/element";
+@import "components/section";
+@import "components/recommender";
+@import "components/rate";
+
+.app-header {
+  text-align: center;
+  background-color: #222;
+  padding: 20px;
+  color: white;
+}
+
+.app-intro {
+  font-size: large;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color: $black;
+  background-color: $background-light;
+}

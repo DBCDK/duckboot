@@ -1,14 +1,15 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
 import {ElementList} from './element.component';
+import JsonView from './jsonView.container';
 
-export function RecommenderButton({url, name}) {
+export function RecommenderButton(recommender) {
   const onClick = (e) => {
     e.preventDefault();
-    GlobalState.recommend(url, GlobalState.getRatings());
+    GlobalState.recommend(recommender, GlobalState.getRatings());
   };
   return (
-    <a onClick={onClick}>{name}</a>
+    <a href="#" className={`button ${recommender.isActive && 'active' || 'submit'}`} onClick={onClick}>{recommender.name}</a>
   );
 }
 
@@ -19,16 +20,18 @@ export class RecommenderButtons extends React.Component {
     this.state = {
       recommenders: []
     };
+  }
+
+  componentDidMount() {
     GlobalState.listen(({recommenders}) => {
-      if (recommenders !== this.state.recommenders) {
-        this.setState({recommenders});
-      }
+      this.setState({recommenders});
     });
   }
+
   render() {
     return (
-      <div>
-        {this.state.recommenders.map(recommender => <RecommenderButton key={recommender.url} {...recommender} />)}
+      <div className="recommender-buttons">
+        {this.state.recommenders.map(recommender => <RecommenderButton key={recommender.url + recommender.name} {...recommender} />)}
       </div>
     );
   }
@@ -38,17 +41,59 @@ export default class Recommender extends React.Component {
   constructor() {
     super();
     this.state = {
-      recommendations: []
+      recommendations: GlobalState.getState().recommendations,
     };
-    GlobalState.listen(({recommendations}) => {
-      if (recommendations !== this.state.recommendations) {
-        this.setState({recommendations});
-      }
+    this.state.profileUpdated = JSON.stringify(GlobalState.getRatings()) !== JSON.stringify(this.state.recommendations.request);
+  }
+
+  componentDidMount() {
+    this.listener = GlobalState.listen(({recommendations}) => {
+      const profileUpdated = JSON.stringify(GlobalState.getRatings()) !== JSON.stringify(recommendations.request);
+        this.setState({recommendations, profileUpdated});
     });
   }
 
-  render() {
-    return ElementList({list: this.state.recommendations});
+  componentWillUnmount() {
+    GlobalState.unListen(this.listener);
   }
 
+  getRecommendations = () => {
+    const recommender = this.state.recommendations.recommender;
+    GlobalState.recommend(recommender, GlobalState.getRatings());
+  };
+
+  profileUpdated() {
+    return this.state.profileUpdated && <p>Profilen er opdateret. <a href="#" onClick={this.getRecommendations}>Opdater anbefalinger</a></p>;
+  }
+  render() {
+    return(
+      <div>
+        {this.profileUpdated()}
+        {ElementList({list: this.state.recommendations.data || []})}
+      </div>
+    );
+
+  }
 }
+
+export class RecommenderJson extends Recommender {
+  render() {
+    return (
+      <div>
+        {this.profileUpdated()}
+        <h3>url</h3>
+        <div className="mb2">
+          {JsonView(this.state.recommendations.recommender.url)}
+        </div>
+        <h3>Request</h3>
+        <div className="mb2">
+          {JsonView(this.state.recommendations.request)}
+        </div>
+        <h3>Response</h3>
+        {JsonView(this.state.recommendations.response)}
+      </div>
+    );
+    //return ElementList({list: this.state.recommendations.data || []});
+  }
+}
+

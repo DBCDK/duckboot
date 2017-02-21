@@ -1,0 +1,15 @@
+@function gutter($multiply: 1){
+  @return $gutter * $multiply;
+}
+
+@mixin gutter-children-padding($multiply: 1){
+  & > * + * {
+    padding-left: gutter($multiply);
+  }
+}
+
+@mixin gutter-children-margin($multiply: 1){
+  & > * + * {
+    margin-left: gutter($multiply);
+  }
+}

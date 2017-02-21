@@ -2,7 +2,9 @@
   "name": "duckboots",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://xptest.dbc.dk/duckboots/",
   "devDependencies": {
+    "node-sass": "^4.5.0",
     "nodemon": "^1.11.0",
     "react-scripts": "0.8.5"
   },
@@ -13,14 +15,18 @@
     "koa-convert": "^1.2.0",
     "koa-router": "^7.0.0",
     "koa2-cors": "^2.0.3",
+    "npm-run-all": "^4.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "superagent": "^3.4.1"
   },
   "scripts": {
+    "build-css": "node-sass src/css/index.scss -o src/css",
+    "watch-css": "npm run build-css && node-sass src/css/index.scss -o src/css --watch src/css/index.scss",
     "serve": "nodemon --exec node --no-stdin src/server/server.index.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

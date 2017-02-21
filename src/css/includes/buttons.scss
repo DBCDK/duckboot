@@ -1,0 +1,12 @@
+@mixin button-reset() {
+  font-weight: 400;
+  background-color: white;
+  border: none;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 1rem;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: inline-block;
+}

@@ -28,10 +28,18 @@ export default class SearchResultContainer extends React.Component {
         searching: false
       }
     };
-    GlobalState.listen((state) => {
-      this.setState({search: state.search});
+  }
+
+  componentDidMount() {
+    this.listener = GlobalState.listen(({search}) => {
+      this.setState({search});
     });
   }
+
+  componentWillUnmount() {
+    GlobalState.unListen(this.listener);
+  }
+
 
   render() {
     const search = this.state.search;

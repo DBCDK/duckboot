@@ -1,0 +1,36 @@
+.bold {
+  font-weight: 700;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.container {
+  margin-bottom: gutter(3);
+}
+
+.is-hidden    { display:    none !important; }
+.is-invisible { visibility: hidden !important; }
+
+.block        { display: block        !important; }
+.block-center {
+  display: block        !important;
+  margin: auto;
+}
+.inline       { display: inline       !important; }
+.inline-block { display: inline-block !important; }
+
+.left  { float: left  !important; }
+.right { float: right !important; }
+
+.text-left   { text-align: left   !important; }
+.text-center { text-align: center !important; }
+.text-right  { text-align: right  !important; }
+
+.mt0 { margin-top:    0   !important; }
+.mt1 { margin-top:    gutter() !important; }
+.mb0 { margin-bottom: 0   !important; }
+.mb1 { margin-bottom: gutter() !important; }
+.mb2 { margin-bottom: gutter(2) !important; }
+.mb4 { margin-bottom: gutter(4) !important; }
