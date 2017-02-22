@@ -113,7 +113,11 @@ class GlobalState {
         if (res && res.text) {
           const result = JSON.parse(res.text).result;
           recommendations.response = result;
-          recommendations.data = result.map(element => element[1]);
+          recommendations.data = result.map(element => {
+            const el  = Object.assign({}, element[1]);
+            el.pid = element[0];
+            return el;
+          });
         }
         else {
           recommendations.response = err;
