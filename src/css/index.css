@@ -276,9 +276,9 @@ input.underline:focus {
   flex-shrink: 0; }
   .section + .section {
     padding-left: 1rem; }
-  .section h2 {
+  .section > h2 {
     position: relative; }
-    .section h2 a {
+    .section > h2 a {
       position: absolute;
       right: 0;
       bottom: 5px;

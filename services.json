@@ -5,13 +5,18 @@
     "method": "post"
   },
   {
-    "name": "aquamend",
-    "url": "http://0.recommender-aqua.xp.staging.mcp1-proxy.dbc.dk/recommender/loan",
+    "name": "loan",
+    "url": "http://xptest.dbc.dk/duckboots/api/recommend/loan",
     "method": "post"
   },
   {
-    "name": "aquapop",
-    "url": "http://0.recommender-aqua.xp.staging.mcp1-proxy.dbc.dk/recommender/pop",
+    "name": "new",
+    "url": "http://xptest.dbc.dk/duckboots/api/recommend/new",
+    "method": "post"
+  },
+  {
+    "name": "cosim",
+    "url": "http://xptest.dbc.dk/duckboots/api/recommend-cosim",
     "method": "post"
   }
 ]

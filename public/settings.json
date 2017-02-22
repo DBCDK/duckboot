@@ -1,0 +1,17 @@
+{
+  "recommenders": [
+    {
+      "name": "aqua loan",
+      "url": "http://localhost:3001/loan"
+    },
+    {
+      "name": "aqua new",
+      "url": "http://localhost:3001/new"
+    },
+    {
+      "name": "aqua cosim",
+      "url": "http://localhost:3001/cosim"
+    }
+  ],
+  "search": "http://localhost:3001/search"
+}
