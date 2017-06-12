@@ -132,7 +132,7 @@ class GlobalState {
     this.removeLike(element);
     const profile = this.getProfile();
     profile.ratings = profile.ratings.concat([{
-      pid: element.pid,
+      pid: element.pid[0],
       element,
       like: value
     }]);
@@ -141,7 +141,7 @@ class GlobalState {
 
   removeLike(element) {
     const profile = this.getProfile();
-    profile.ratings = profile.ratings.filter(like => like.pid !== element.pid);
+    profile.ratings = profile.ratings.filter(like => like.pid !== element.pid[0]);
     this.setState({profile: Object.assign({}, profile)})
   }
 
@@ -152,20 +152,20 @@ class GlobalState {
   }
 
   removeSaved(element) {
-    const saved = this.getState().saved.filter(saved => saved.pid !== element.pid);
+    const saved = this.getState().saved.filter(saved => saved.pid !== element.pid[0]);
     this.setState({saved})
   }
 
   isSaved(element) {
     const saved = this.getState().saved || [];
-    return saved.filter(saved => saved.pid === element.pid).length > 0;
+    return saved.filter(saved => saved.pid === element.pid[0]).length > 0;
   }
 
 
 
   getRating(element) {
     const profile = this.getProfile();
-    return profile.ratings.filter(like => like.pid === element.pid)[0] || null;
+    return profile.ratings.filter(like => like.pid === element.pid[0])[0] || null;
   }
 
   getRatings() {
