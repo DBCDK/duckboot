@@ -11,9 +11,10 @@ export function Element({element}) {
       </div> || ''}
       <div className="w-100">
         <h2>
-          <a target="_blank" href={`https://bibliotek.dk/work/${pid}`}>{title}</a>
+          <a target="_blank" href={`https://bibliotek.dk/work/${pid}`}>{element.dcTitleFull || title}</a>
         </h2>
-        <h3>{creator}</h3>
+        <h3>{creator || element.creatorAut || ''}</h3>
+        <h3>{element.typeBibDKType}</h3>
         <RateButtons element={element}/>
       </div>
 
