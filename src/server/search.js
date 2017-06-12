@@ -9,7 +9,6 @@ export const search = async (params) => {
 
 const makeRequestToServiceProvider = async function (params, endpoint) {
   const token = await getToken();
-  console.log(token, params);
   const qs = Object.assign(params, {access_token: token});
 
   const req = {
@@ -18,7 +17,6 @@ const makeRequestToServiceProvider = async function (params, endpoint) {
   };
 
   const response = await promiseRequest('post', req);
-  console.log(response);
   try {
     const result = JSON.parse(response.body);
 

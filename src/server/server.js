@@ -21,7 +21,6 @@ const bodyparser = new BodyParser();
 const PORT = 3001;
 
 function getService(name) {
-  console.log(name);
   const result = services.filter(service => service.name === name);
   if (result.length) {
     return result[0];
