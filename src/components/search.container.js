@@ -12,7 +12,8 @@ export default class Search extends React.Component {
     e.preventDefault();
     GlobalState.search({
       limit: this.limit,
-      q: this.input.value
+      q: (this.input.value.indexOf('(') && this.input.value) || `("${this.input.value}")`,
+      fields: ['title', 'creator', 'coverUrlThumbnail', 'pid']
     });
   };
 

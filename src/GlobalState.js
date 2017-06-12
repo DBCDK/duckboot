@@ -76,12 +76,14 @@ class GlobalState {
   }
 
   search(query) {
+    console.log(query);
     this.setState({search: {query: query, searching: true}});
     request.post(this.state.searchUrl)
       .send(query)
       .end((err, res) => {
         if (res && res.text) {
-          const data = JSON.parse(res.text).data;
+          const data = JSON.parse(res.text);
+          console.log(data);
           this.setState({search: {data, query: query.q, searching: false}})
         }
         else {

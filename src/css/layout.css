@@ -4,27 +4,20 @@
   flex-direction: row;
   flex-wrap: wrap;
 }*/
-
-
 .container {
-  margin: 2rem;
-}
+  margin: 2rem; }
 
 .grow {
-  flex-grow: 1;
-}
+  flex-grow: 1; }
 
 .baseline {
-  align-items: baseline;
-}
+  align-items: baseline; }
 
 .relative {
-  position: relative;
-}
+  position: relative; }
+
 .absolute {
-  position: absolute;
-  &.right {
+  position: absolute; }
+  .absolute.right {
     top: 0;
-    right: 0;
-  }
-}
+    right: 0; }

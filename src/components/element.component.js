@@ -2,14 +2,21 @@ import React from 'react';
 import {RateButtons} from './rate.component';
 
 export function Element({element}) {
-  const {pid, title, creator} = element;
+  const {pid, title, creator, coverUrlThumbnail} = element;
   return (
-    <div id={pid} className="element">
-      <h2>
-        <a target="_blank" href={`https://bibliotek.dk/work/${pid}`}>{title}</a>
-      </h2>
-      <h3>{creator}</h3>
-      <RateButtons element={element}/>
+    <div id={pid} className="element flex justify-between">
+      {coverUrlThumbnail &&
+      <div className="mr2 w5">
+        <img src={coverUrlThumbnail} alt=""/>
+      </div> || ''}
+      <div className="w-100">
+        <h2>
+          <a target="_blank" href={`https://bibliotek.dk/work/${pid}`}>{title}</a>
+        </h2>
+        <h3>{creator}</h3>
+        <RateButtons element={element}/>
+      </div>
+
     </div>
   );
 }
