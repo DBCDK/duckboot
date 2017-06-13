@@ -1,6 +1,7 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
 import {ElementList} from './element.component';
+import Booster from './booster';
 import JsonView from './jsonView.container';
 
 export function RecommenderButton(recommender) {
@@ -68,6 +69,8 @@ export default class Recommender extends React.Component {
   render() {
     return(
       <div>
+        <Booster name="test" value="23" set={console.log.bind(console)} />
+
         {this.profileUpdated()}
         {ElementList({list: this.state.recommendations.data || []})}
       </div>

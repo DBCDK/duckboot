@@ -92,7 +92,7 @@ class GlobalState {
       });
   }
 
-  recommend(recommender, {like, dislike}) {
+  recommend(recommender, {like, dislike}, filters = [{name: "floodCreatorFilter", "maximum": 2}], boosters = [{name: "popularityBooster", factor: 10}]) {
     const recommenders = this.getState().recommenders.map(rec => {
       if (rec.name === recommender.name && rec.url === recommender.url) {
         rec.isActive = true;
@@ -110,7 +110,7 @@ class GlobalState {
     }
     this.setState({recommendations, recommenders});
     request.post(recommender.url)
-      .send({like, dislike})
+      .send({like, dislike, boosters, filters})
       .end((err, res) => {
         if (res && res.text) {
           const result = JSON.parse(res.text).result;
