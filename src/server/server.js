@@ -12,7 +12,7 @@ const BodyParser = require('koa-body');
 const config = require('../config').default;
 
 const services = require('../../services.json');
-const search = require('./search').search;
+import {search, getImage} from './search';
 
 const app = new Koa();
 const router = new Router();
@@ -56,8 +56,20 @@ router.post('/search', bodyparser, async (ctx) => {
   }
 });
 
+router.post('/image', bodyparser, async (ctx) => {
+  try {
+    const response = await getImage(ctx.request.body.pids);
+    ctx.body = response.data;
+    ctx.status = response.statusCode;
+  }
+  catch (e) {
+    console.error(e);
+  }
+});
+
 router.post('/:service', bodyparser, async (ctx) => {
   const service = getService(ctx.params.service);
+  console.log(service, ctx.request.body);
   if (service) {
     try {
       const response = await promiseRequest({

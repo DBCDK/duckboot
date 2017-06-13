@@ -5,7 +5,19 @@ import config from '../config';
 
 export const search = async (params) => {
   return await makeRequestToServiceProvider(params, 'search');
-}
+};
+
+
+export const getImage = async (pids) => {
+  const params = {
+    pids: Array.isArray(pids) && pids || [pids],
+    fields: ['coverUrlThumbnail']
+  }
+
+  return await makeRequestToServiceProvider(params, 'work');
+};
+
+
 
 const makeRequestToServiceProvider = async function (params, endpoint) {
   const token = await getToken();
@@ -30,4 +42,4 @@ const makeRequestToServiceProvider = async function (params, endpoint) {
     console.error('Error while parsing response from openplatform', {error: e.message, stack: e.stack});
     return {error: 'Error while parsing response from openplatform'};
   }
-}
+};

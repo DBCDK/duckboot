@@ -1,5 +1,6 @@
 import React from 'react';
 import {RateButtons} from './rate.component';
+import request from 'superagent';
 
 export function Element({element}) {
   const {pid, title, creator, coverUrlThumbnail} = element;
@@ -22,11 +23,47 @@ export function Element({element}) {
   );
 }
 
+export class ImageElement extends React.Component {
+  constructor(props) {
+
+    super(props);
+    this.state = {
+      element: props.element,
+    }
+  }
+
+  componentDidMount() {
+    if (!this.state.element.hasFetchedImage && !this.state.element.coverUrlThumbnail) {
+      request.post('http://localhost:3001/image')
+        .send({pids: this.props.element.pid})
+        .end((err, res) => {
+          const element = this.state.element;
+          element.hasFetchedImage = true;
+
+          if (res && res.text) {
+            const data = JSON.parse(res.text);
+            if (data[0].coverUrlThumbnail) {
+              element.coverUrlThumbnail = data[0].coverUrlThumbnail;
+
+            }
+          }
+          console.log(element);
+          this.setState({element});
+        });
+
+    }
+  }
+
+  render() {
+    return Element({element: this.state.element});
+  }
+}
+
 export function ElementList({header, list}) {
   return (
     <div className="search-result">
       {(list.length && header && <h3>{header}</h3>) || ''}
-      {list.map(element => <Element key={element.pid} element={element}/>)}
+      {list.map(element => <ImageElement key={element.pid} element={element}/>)}
     </div>
   )
 }
