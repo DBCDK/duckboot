@@ -60,7 +60,7 @@ export default class Recommender extends React.Component {
 
   getRecommendations = () => {
     const recommender = this.state.recommendations.recommender;
-    GlobalState.recommend(recommender, GlobalState.getRatings());
+    GlobalState.recommend(recommender, GlobalState.getRatings(), this.state.filters || [], this.state.boosters || []);
   };
 
   profileUpdated() {
@@ -69,7 +69,8 @@ export default class Recommender extends React.Component {
   render() {
     return(
       <div>
-        <Booster name="test" value="23" set={console.log.bind(console)} />
+
+        <Booster name="test" value="[]" set={boosters => GlobalState.setState({boosters: JSON.parse(boosters)})} />
 
         {this.profileUpdated()}
         {ElementList({list: this.state.recommendations.data || []})}

@@ -11,6 +11,14 @@
     {
       "name": "aqua cosim",
       "url": "http://localhost:3001/cosim"
+    },
+    {
+      "name": "bookie loan",
+      "url": "http://localhost:3001/bookie-loan"
+    },
+    {
+      "name": "bookie popular",
+      "url": "http://localhost:3001/bookie-popular"
     }
   ],
   "search": "http://localhost:3001/search"

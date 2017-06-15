@@ -244,7 +244,7 @@ button, .button {
     .profile .profile-buttons > * + * {
       margin-left: 2rem; }
 
-input {
+input[type="text"] {
   width: 100%;
   display: inline-block;
   border: none;

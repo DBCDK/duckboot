@@ -92,7 +92,8 @@ class GlobalState {
       });
   }
 
-  recommend(recommender, {like, dislike}, filters = [{name: "floodCreatorFilter", "maximum": 2}], boosters = [{name: "popularityBooster", factor: 10}]) {
+  recommend(recommender, {likes, dislikes}) {
+    const {boosters = [], filters = []} = this.getState();
     const recommenders = this.getState().recommenders.map(rec => {
       if (rec.name === recommender.name && rec.url === recommender.url) {
         rec.isActive = true;
@@ -105,25 +106,23 @@ class GlobalState {
     const recommendations = {
       recommender: recommender,
       data: [],
-      request: {like, dislike},
+      request: {likes, dislikes, filters, boosters},
       response: {}
     }
     this.setState({recommendations, recommenders});
     request.post(recommender.url)
-      .send({like, dislike, boosters, filters})
+      .send({likes, dislikes, boosters, filters})
       .end((err, res) => {
         if (res && res.text) {
-          const result = JSON.parse(res.text).result;
+          console.log(res);
+          const result = res.body.response;
           recommendations.response = result;
-          recommendations.data = result.map(element => {
-            const el  = Object.assign({}, element[1]);
-            el.pid = element[0];
-            return el;
-          });
+          recommendations.data = result;
         }
         else {
           recommendations.response = err;
         }
+        console.log(recommendations);
         this.setState({recommendations})
       });
   }
@@ -158,21 +157,21 @@ class GlobalState {
 
   isSaved(element) {
     const saved = this.getState().saved || [];
-    return saved.filter(saved => saved.pid === element.pid[0]).length > 0;
+    return saved.filter(saved => saved.pid === (element.pid[0] || element.pid)).length > 0;
   }
 
 
 
   getRating(element) {
     const profile = this.getProfile();
-    return profile.ratings.filter(like => like.pid === element.pid[0])[0] || null;
+    return profile.ratings.filter(like => like.pid === (element.pid[0] || element.pid))[0] || null;
   }
 
   getRatings() {
     const profile = this.getProfile();
-    const like = profile.ratings.filter(rating => rating.like).map(rating => rating.pid);
-    const dislike = profile.ratings.filter(rating => !rating.like).map(rating => rating.pid);
-    return {like, dislike};
+    const likes = profile.ratings.filter(rating => rating.like).map(rating => rating.pid);
+    const dislikes = profile.ratings.filter(rating => !rating.like).map(rating => rating.pid);
+    return {likes, dislikes};
   }
 
   getProfile() {
