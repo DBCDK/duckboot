@@ -10,6 +10,26 @@
     "method": "post"
   },
   {
+    "name": "bookie-loan",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/loan",
+    "method": "post"
+  },
+  {
+    "name": "bookie-subject",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/subject",
+    "method": "post"
+  },
+  {
+    "name": "bookie-popular",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/popular",
+    "method": "post"
+  },
+  {
+    "name": "bookie-series",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/series",
+    "method": "post"
+  },
+  {
     "name": "new",
     "url": "http://xptest.dbc.dk/duckboots/api/recommend/new",
     "method": "post"
