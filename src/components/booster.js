@@ -4,24 +4,83 @@ import GlobalState from '../GlobalState';
 function PopularityBooster({value, change}) {
   return (
     <div>
-      <div className="booster--name">Popularity Booster</div>
+      <div className="booster--name">Popularity</div>
       <div className="booster--value">{value}</div>
-      <input defaultValue={value.factor} type="range" min='0' max="1000" onChange={e => change({factor: Number(e.currentTarget.value), name: 'popularityBooster'})} />
+      <input defaultValue={5} type="range" min='0' max="10"
+             onChange={e => change({factor: Number(e.currentTarget.value), name: 'popularityBooster'})}/>
+    </div>
+  );
+}
+function CustomBooster({value, change}) {
+  return (
+    <div>
+      <div className="booster--name">Custom</div>
+      <textarea defaultValue="[]" onChange={e => change(JSON.parse(e.currentTarget.value))}/>
     </div>
   );
 }
 
-PopularityBooster.defaultValue = {factor: name, name: 'popularityBooster'};
+function AvailabilityBooster({value, change}) {
+  return (
+    <div>
+      <div className="booster--name">Availability</div>
+      <div className="booster--value">{value}</div>
+      <p>indtast en liste af Agency ID'er (Adskil med komma)</p>
+      <input type="text" onChange={e => change({
+        agencies: e.currentTarget.value.replace(' ', '').split(','),
+        name: 'availabilityBooster'
+      })}/>
+    </div>
+  );
+}
 
-const boosterList = {PopularityBooster};
+function ListBooster({value, change}) {
+  return (
+    <div>
+      <div className="booster--name">List</div>
+      <div className="booster--value">{value}</div>
+      <p>indtast en liste af Agency ID'er (Adskil med komma)</p>
+      <input type="text" onChange={e => change({
+        agencies: e.currentTarget.value.replace(' ', '').split(','),
+        name: 'listBooster'
+      })}/>
+    </div>
+  );
+}
+
+class SeasonBooster extends React.Component {
+
+  change = (e) => {
+    this.props.change({
+      name: 'seasonBooster',
+      factor: Number(this.refs.factor.value),
+      month: Number(this.refs.month.value),
+    })
+  }
+  render() {
+    return (
+      <div>
+        <div className="booster--name">Season</div>
+        <div className="booster--value">{this.props.value}</div>
+        <p>indtast en liste af Agency ID'er (Adskil med komma)</p>
+        <input ref="factor" name="" type="text" onChange={this.change}/>
+        <select ref="month" name="" type="text" onChange={this.change}>
+          {['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December']
+            .map((month, i) => <option value={i + 1}>{month}</option>)}
+        </select>
+      </div>
+    );
+  }
+}
+
+const boosterList = {PopularityBooster, AvailabilityBooster, SeasonBooster, ListBooster, CustomBooster};
 
 export default class Boosters extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      boosters: [
-      ]
+      boosters: []
     };
   }
 
@@ -50,14 +109,15 @@ export default class Boosters extends React.Component {
   render() {
     return (
       <div>
-      <form className="boosters" onSubmit={this.submit}>
-        <select ref="select" name="boost-selector" id="" defaultValue={PopularityBooster}>
-          {Object.keys(boosterList).map(boosterName => <option value={boosterName}>{boosterName}</option>)}
-        </select>
-        <input type="submit" value="opret"/>
-      </form>
+        <form className="boosters" onSubmit={this.submit}>
+          <select ref="select" name="boost-selector" id="" defaultValue={PopularityBooster}>
+            {Object.keys(boosterList).map(boosterName => <option value={boosterName}>{boosterName}</option>)}
+          </select>
+          <input type="submit" value="opret"/>
+        </form>
         <div className="boosters">
-          {this.state.boosters.map(({Booster, value}, i) => <Booster key={Booster} value change={value => this.changeBoosterValue(Booster, value)} />)}
+          {this.state.boosters.map(({Booster, value}, i) => <Booster key={Booster} value
+                                                                     change={value => this.changeBoosterValue(Booster, value)}/>)}
         </div>
       </div>
     );
