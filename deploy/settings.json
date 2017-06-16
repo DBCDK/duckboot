@@ -2,16 +2,24 @@
   "recommenders": [
     {
       "name": "aqua loan",
-      "url": "http://xptest.dbc.dk/duckboots/api/recommend/loan"
+      "url": "/loan"
     },
     {
       "name": "aqua new",
-      "url": "http://xptest.dbc.dk/duckboots/api/recommend/new"
+      "url": "/new"
     },
     {
       "name": "aqua cosim",
-      "url": "http://xptest.dbc.dk/duckboots/api/recommend-cosim"
+      "url": "/cosim"
+    },
+    {
+      "name": "bookie loan",
+      "url": "/bookie-loan"
+    },
+    {
+      "name": "bookie popular",
+      "url": "/bookie-popular"
     }
   ],
-  "search": "http://xptest.dbc.dk/duckboots/api/search"
+  "search": "/search"
 }

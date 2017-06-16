@@ -375,6 +375,42 @@ input.underline:focus {
     .rate-button.yellow .icon {
       background-color: #296bbd; }
 
+.filters--wrapper .hide {
+  height: 0;
+  overflow: hidden; }
+
+.filters--wrapper .show {
+  height: inherit;
+  overflow: hidden; }
+
+.filter {
+  position: relative; }
+
+.filter--remove {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+  opacity: 0;
+  transition: all 200ms ease-in; }
+
+.filter--close {
+  position: absolute;
+  display: inline-block;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  cursor: pointer; }
+
+.filter:hover .filter--remove {
+  opacity: 1; }
+
+.filters--toggle {
+  cursor: pointer; }
+
 .app-header {
   text-align: center;
   background-color: #222;

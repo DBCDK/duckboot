@@ -2,6 +2,7 @@ import React from 'react';
 import GlobalState from '../GlobalState';
 import {ElementList} from './element.component';
 import Booster from './booster';
+import Filters from './filters';
 import JsonView from './jsonView.container';
 
 export function RecommenderButton(recommender) {
@@ -44,12 +45,16 @@ export default class Recommender extends React.Component {
     this.state = {
       recommendations: GlobalState.getState().recommendations,
     };
-    this.state.profileUpdated = JSON.stringify(GlobalState.getRatings()) !== JSON.stringify(this.state.recommendations.request);
+    this.state.profileUpdated = this.didProfileUpdate(this.state.recommendations.request);
+  }
+
+  didProfileUpdate(request) {
+    return JSON.stringify(GlobalState.recommenderRequestData()) !== JSON.stringify(request)
   }
 
   componentDidMount() {
     this.listener = GlobalState.listen(({recommendations}) => {
-      const profileUpdated = JSON.stringify(GlobalState.getRatings()) !== JSON.stringify(recommendations.request);
+      const profileUpdated = this.didProfileUpdate(recommendations.request);
         this.setState({recommendations, profileUpdated});
     });
   }
@@ -70,8 +75,9 @@ export default class Recommender extends React.Component {
     return(
       <div>
 
-        <Booster name="test" value="[]" set={boosters => GlobalState.setState({boosters: JSON.parse(boosters)})} />
-
+        <div className="filters">
+          <Filters show={false}/>
+        </div>
         {this.profileUpdated()}
         {ElementList({list: this.state.recommendations.data || []})}
       </div>

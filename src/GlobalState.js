@@ -71,6 +71,7 @@ class GlobalState {
     this.listeners.push(cb);
     return cb;
   }
+
   unListen(cb) {
     this.listeners = this.listeners.filter(callback => callback !== cb);
   }
@@ -92,8 +93,15 @@ class GlobalState {
       });
   }
 
-  recommend(recommender, {likes, dislikes}) {
+
+  recommenderRequestData() {
     const {boosters = [], filters = []} = this.getState();
+    const {likes = [], dislikes = []} = this.getRatings();
+    return{likes, dislikes, boosters, filters}
+  }
+
+  recommend(recommender) {
+    const recommenderRequest = this.recommenderRequestData();
     const recommenders = this.getState().recommenders.map(rec => {
       if (rec.name === recommender.name && rec.url === recommender.url) {
         rec.isActive = true;
@@ -106,15 +114,14 @@ class GlobalState {
     const recommendations = {
       recommender: recommender,
       data: [],
-      request: {likes, dislikes, filters, boosters},
+      request: recommenderRequest,
       response: {}
     }
     this.setState({recommendations, recommenders});
     request.post(recommender.url)
-      .send({likes, dislikes, boosters, filters})
+      .send(recommenderRequest)
       .end((err, res) => {
         if (res && res.text) {
-          console.log(res);
           const result = res.body.response;
           recommendations.response = result;
           recommendations.data = result;
@@ -122,7 +129,6 @@ class GlobalState {
         else {
           recommendations.response = err;
         }
-        console.log(recommendations);
         this.setState({recommendations})
       });
   }
@@ -159,8 +165,6 @@ class GlobalState {
     const saved = this.getState().saved || [];
     return saved.filter(saved => saved.pid === (element.pid[0] || element.pid)).length > 0;
   }
-
-
 
   getRating(element) {
     const profile = this.getProfile();
