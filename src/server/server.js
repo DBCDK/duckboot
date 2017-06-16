@@ -4,21 +4,22 @@
  */
 
 // Libraries
-const Koa = require('koa');
-const Router = require('koa-router');
-const cors = require('koa2-cors');
-const request = require('superagent');
-const BodyParser = require('koa-body');
-const config = require('../config').default;
-
-const services = require('../../services.json');
+import Koa from 'koa';
+import Router from 'koa-router';
+import cors from 'koa2-cors';
+import request from 'superagent';
+import BodyParser from 'koa-body';
+import config from '../config';
+import services from '../../services.json';
 import {search, getImage} from './search';
+import serve from 'koa-better-serve';
+import path from 'path';
+import fs from 'fs';
+
 
 const app = new Koa();
 const router = new Router();
 const bodyparser = new BodyParser();
-
-const PORT = 3001;
 
 function getService(name) {
   const result = services.filter(service => service.name === name);
@@ -69,7 +70,6 @@ router.post('/image', bodyparser, async (ctx) => {
 
 router.post('/:service', bodyparser, async (ctx) => {
   const service = getService(ctx.params.service);
-  console.log(service, ctx.request.body);
   if (service) {
     try {
       const response = await promiseRequest({
@@ -90,14 +90,20 @@ router.post('/:service', bodyparser, async (ctx) => {
   }
 });
 
+router.get('/', bodyparser, async (ctx) => {
+  ctx.body = fs.readFileSync(path.join(__dirname, '../../', '/deploy/index.html')).toString()
+  ctx.status = 200;
+});
 app.use(cors({origin: false}));
 app.use(router.routes());
+app.use(serve('./deploy', '/'));
+
 
 app.on('error', (err) => {
   console.error('Server error', {error: err.message, stack: err.stack});
 });
 
-app.listen(PORT, () => {
-  console.info(`Server is up and running on port ${PORT}!`);
+app.listen(config.PORT, () => {
+  console.info(`Server is up and running on port ${config.PORT}!`);
 });
 
