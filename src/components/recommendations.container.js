@@ -53,9 +53,9 @@ export default class Recommender extends React.Component {
   }
 
   componentDidMount() {
-    this.listener = GlobalState.listen(({recommendations}) => {
+    this.listener = GlobalState.listen(({recommendations, recommending}) => {
       const profileUpdated = this.didProfileUpdate(recommendations.request);
-        this.setState({recommendations, profileUpdated});
+        this.setState({recommendations, profileUpdated, recommending});
     });
   }
 
@@ -80,7 +80,7 @@ export default class Recommender extends React.Component {
         </div>
         {this.profileUpdated()}
         <h2>Resultater</h2>
-        {ElementList({list: this.state.recommendations.data || []})}
+        {this.state.recommending && 'Søger...' || ElementList({list: this.state.recommendations.data || []})}
       </div>
     );
 

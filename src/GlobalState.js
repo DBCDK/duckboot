@@ -116,7 +116,7 @@ class GlobalState {
       request: recommenderRequest,
       response: {}
     }
-    this.setState({recommendations, recommenders});
+    this.setState({recommendations, recommenders, recommending: true});
     request.post(recommender.url)
       .send(recommenderRequest)
       .end((err, res) => {
@@ -130,7 +130,7 @@ class GlobalState {
         else {
           recommendations.response = err;
         }
-        this.setState({recommendations})
+        this.setState({recommendations, recommending: false})
       });
   }
 
