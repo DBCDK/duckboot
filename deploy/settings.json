@@ -1,24 +1,20 @@
 {
   "recommenders": [
     {
-      "name": "aqua loan",
-      "url": "/loan"
-    },
-    {
-      "name": "aqua new",
-      "url": "/new"
-    },
-    {
-      "name": "aqua cosim",
-      "url": "/cosim"
-    },
-    {
-      "name": "bookie loan",
+      "name": "Loans",
       "url": "/bookie-loan"
     },
     {
-      "name": "bookie popular",
+      "name": "Popular",
       "url": "/bookie-popular"
+    },
+    {
+      "name": "Series",
+      "url": "/bookie-series"
+    },
+    {
+      "name": "Subject",
+      "url": "/bookie-subject"
     }
   ],
   "search": "/search"

@@ -1,24 +1,20 @@
 {
   "recommenders": [
     {
-      "name": "aqua loan",
-      "url": "http://localhost:3001/loan"
-    },
-    {
-      "name": "aqua new",
-      "url": "http://localhost:3001/new"
-    },
-    {
-      "name": "aqua cosim",
-      "url": "http://localhost:3001/cosim"
-    },
-    {
-      "name": "bookie loan",
+      "name": "Loan",
       "url": "http://localhost:3001/bookie-loan"
     },
     {
-      "name": "bookie popular",
+      "name": "Popular",
       "url": "http://localhost:3001/bookie-popular"
+    },
+    {
+      "name": "Subject",
+      "url": "http://localhost:3001/bookie-subject"
+    },
+    {
+      "name": "Series",
+      "url": "http://localhost:3001/bookie-series"
     }
   ],
   "search": "http://localhost:3001/search"

@@ -45,10 +45,10 @@ function CreateProfile() {
     e.preventDefault();
     GlobalState.addProfile({
       name: refs.name.value,
-      token: refs.token.value
+      agencyId: refs.agencyId.value
     });
     refs.name.value = "";
-    refs.token.value = "";
+    refs.agencyId.value = "";
   };
   return (
     <section className="profile">
@@ -57,7 +57,7 @@ function CreateProfile() {
           <input className="underline" ref={(ref) => refs.name = ref} type="text" id="name" placeholder="Navn"/>
         </div>
         <div className="form-group mb2">
-          <input className="underline" ref={(ref) => refs.token = ref} type="text" id="token" placeholder="Token"/>
+          <input className="underline" ref={(ref) => refs.agencyId = ref} type="text" id="agency" placeholder="Agency ID"/>
         </div>
         <input className="button submit" type="submit" id="submit" value="opret profil"/>
       </form>

@@ -77,10 +77,9 @@ class GlobalState {
   }
 
   search(query) {
-    console.log(query);
     this.setState({search: {query: query, searching: true}});
     request.post(this.state.searchUrl)
-      .send(query)
+      .send({query, profile: this.getProfile()})
       .end((err, res) => {
         if (res && res.text) {
           const data = JSON.parse(res.text);
@@ -121,9 +120,11 @@ class GlobalState {
     request.post(recommender.url)
       .send(recommenderRequest)
       .end((err, res) => {
+      console.log(err, res);
         if (res && res.text) {
           const result = res.body.response;
           recommendations.response = result;
+          recommendations.header = res.body.responseHeader;
           recommendations.data = result;
         }
         else {

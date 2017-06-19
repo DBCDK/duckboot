@@ -14,20 +14,20 @@ let TOKEN = null;
  *
  * @return {string}
  */
-export async function getToken() {
-  if (tokenIsValid()) {
+export async function getToken(agencyId = '') {
+  if (!agencyId && tokenIsValid()) {
     return TOKEN.access_token;
   }
 
-  await setToken();
+  await setToken(agencyId);
   return TOKEN.access_token;
 }
 
 /**
  * Requests a new token from smaug and sets TOKEN upon sucess
  */
-export async function setToken() {
-  const token = await getNewTokenFromSmaug();
+export async function setToken(agencyId) {
+  const token = await getNewTokenFromSmaug(agencyId);
   if (token.error) {
     console.error('Error while retrieving token from Smaug', {response: token});
   }
@@ -65,13 +65,13 @@ function tokenIsValid() {
  *
  * @return {*}
  */
-function getNewTokenFromSmaug() {
+function getNewTokenFromSmaug(agencyId = '') {
   const req = {
     url: `${config.AUTH_URI}/oauth/token`,
     form: {
       grant_type: 'password',
-      username: '@',
-      password: '@'
+      username: `@${agencyId}`,
+      password: `@${agencyId}`
     },
     auth: {
       user: config.OP_CLIENT,

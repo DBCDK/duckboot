@@ -48,7 +48,7 @@ function promiseRequest({method, url, query = {}, body = {}}) {
 
 router.post('/search', bodyparser, async (ctx) => {
   try {
-    const response = await search(ctx.request.body);
+    const response = await search(ctx.request.body.query, ctx.request.body.profile);
     ctx.body = response.data;
     ctx.status = response.statusCode;
   }
@@ -82,7 +82,8 @@ router.post('/:service', bodyparser, async (ctx) => {
       ctx.status = response.status;
     }
     catch (e) {
-      console.error(e);
+      ctx.status = 500;
+      ctx.body = e.body;
     }
   }
   else {

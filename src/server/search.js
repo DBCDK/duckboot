@@ -3,8 +3,8 @@ import {getToken} from './smaug.client';
 
 import config from '../config';
 
-export const search = async (params) => {
-  return await makeRequestToServiceProvider(params, 'search');
+export const search = async ({q}, {agencyId}) => {
+  return await makeRequestToServiceProvider({q, agencyId}, 'search');
 };
 
 
@@ -20,7 +20,8 @@ export const getImage = async (pids) => {
 
 
 const makeRequestToServiceProvider = async function (params, endpoint) {
-  const token = await getToken();
+  const token = await getToken(params.agencyId || '');
+  delete params.agencyId;
   const qs = Object.assign(params, {access_token: token});
 
   const req = {

@@ -175,8 +175,7 @@ button, .button {
   display: inline-block;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   transition: all 200ms ease-in;
-  cursor: pointer;
-  min-width: 100px; }
+  cursor: pointer; }
   button.active, .button.active {
     background-color: #29bd56;
     color: white; }
@@ -222,6 +221,11 @@ button, .button {
   .text-button:hover, .text-button:focus {
     outline: none;
     background-color: #29bd56; }
+
+.button-select {
+  height: 3rem;
+  background-color: #29bd56;
+  color: white; }
 
 .profile-list h2 {
   text-align: center; }

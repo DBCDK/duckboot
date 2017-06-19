@@ -75,10 +75,11 @@ export default class Recommender extends React.Component {
     return(
       <div>
 
-        <div className="filters">
-          <Filters show={false}/>
+        <div className="filters bg-white pa3 mb1">
+            <Filters show={false}/>
         </div>
         {this.profileUpdated()}
+        <h2>Resultater</h2>
         {ElementList({list: this.state.recommendations.data || []})}
       </div>
     );
@@ -101,6 +102,8 @@ export class RecommenderJson extends Recommender {
         </div>
         <h3>Response</h3>
         {JsonView(this.state.recommendations.response)}
+      <h3>Response Header</h3>
+        {JsonView(this.state.recommendations.header)}
       </div>
     );
     //return ElementList({list: this.state.recommendations.data || []});
