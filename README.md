@@ -27,8 +27,18 @@ All data for profiles is stored in localstorage.
 
 #Development
 For rapid development [create-react-app](https://github.com/facebookincubator/create-react-app) is used.
-This is only needed for development. 
+This is only needed for development.
+To start ti the application in development mode run `npm run start`
 
 #deploy
-copy build folder  
+run `npm run build`. Frontend Application is added to the deploy folder. 
+ 
+# Start application
+start the application with `node src/server/index.js`
 
+# Environment Variables
+- `PORT`: `8080`
+- `OP_CLIENT`: `Open platform client ID`
+- `OP_SECRET`: `Open platform client Secret`
+- `AUTH_URI`: `E.g. https://auth.dbc.dk`
+- `OP_URI`: `E.g. https://openplatform.dbc.dk/v1`

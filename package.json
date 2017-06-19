@@ -28,9 +28,7 @@
     "watch-css": "npm run build-css && node-sass src/css/index.scss -o src/css --watch src/css/index.scss",
     "serve": ". ./env.env && nodemon --exec node --no-stdin src/server/index.js",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js serve",
-    "build": "npm run build-css && react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "dev": "npm-run-all -p watch-css start-js serve",
+    "build": "npm run build-css && react-scripts build"
   }
 }
