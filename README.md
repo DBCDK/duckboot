@@ -36,6 +36,12 @@ run `npm run build`. Frontend Application is added to the deploy folder.
 # Start application
 start the application with `node src/server/index.js`
 
+# Proxy services
+Setup proxy services in /proxy.json
+
+# Recommender buttons
+Setup recommender buttons in deploy/settings.json
+
 # Environment Variables
 - `PORT`: `8080`
 - `OP_CLIENT`: `Open platform client ID`

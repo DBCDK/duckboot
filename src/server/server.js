@@ -10,7 +10,7 @@ import cors from 'koa2-cors';
 import request from 'superagent';
 import BodyParser from 'koa-body';
 import config from '../config';
-import services from '../../services.json';
+import services from '../../proxy.json';
 import {search, getImage} from './search';
 import serve from 'koa-better-serve';
 import path from 'path';
