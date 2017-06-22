@@ -7,6 +7,7 @@ import config from '../config';
 import {promiseRequest} from './request.util';
 
 let TOKEN = null;
+const TOKENS = {};
 
 /**
  * Returns the current set TOKEN.access_token.
@@ -15,12 +16,12 @@ let TOKEN = null;
  * @return {string}
  */
 export async function getToken(agencyId = '') {
-  if (!agencyId && tokenIsValid()) {
-    return TOKEN.access_token;
+  if (tokenIsValid(agencyId)) {
+    return TOKENS[agencyId].access_token;
   }
 
   await setToken(agencyId);
-  return TOKEN.access_token;
+  return TOKENS[agencyId].access_token;
 }
 
 /**
@@ -34,8 +35,7 @@ export async function setToken(agencyId) {
   else {
     token.expires = Date.now() + (token.expires_in * 1000) - 100000;
     console.info('Smaug token was set', {token});
-    TOKEN = token;
-    Object.freeze(TOKEN);
+    TOKENS[agencyId] = token;
   }
 }
 
@@ -44,16 +44,17 @@ export async function setToken(agencyId) {
  *
  * @return {boolean}
  */
-function tokenIsValid() {
-  if (!TOKEN) {
+function tokenIsValid(agencyId) {
+
+  if (!TOKENS[agencyId]) {
     return false;
   }
 
-  if (!TOKEN.access_token) {
+  if (!TOKENS[agencyId].access_token) {
     return false;
   }
 
-  if (Date.now() >= TOKEN.expires) {
+  if (Date.now() >= TOKENS[agencyId].expires) {
     return false;
   }
 

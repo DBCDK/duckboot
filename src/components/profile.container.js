@@ -14,10 +14,11 @@ function ProfileView(profile) {
   return (
     <article className="profile">
       <h2 className="mb1">{profile.name}</h2>
-      <div className="ratings mb1">
+      <h3 className="mb0 gray">{profile.agencyId && `Agency: ${profile.agencyId }` || ''}</h3>
+      <h3 className="ratings mb1">
         {profile.ratings.filter(rating => rating.like).length} likes
         , {profile.ratings.filter(rating => !rating.like).length} dislikes
-      </div>
+      </h3>
       <div className="profile-buttons">
         <a className="button remove" href="#" onClick={remove}>Slet profil</a>
         <a className="button submit" href="#" onClick={select}>Vælg profil</a>
