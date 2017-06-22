@@ -2,20 +2,20 @@
   "recommenders": [
     {
       "name": "Loan",
-      "url": "http://localhost:3001/bookie-loan"
+      "url": "/bookie-loan"
     },
     {
       "name": "Popular",
-      "url": "http://localhost:3001/bookie-popular"
+      "url": "/bookie-popular"
     },
     {
       "name": "Subject",
-      "url": "http://localhost:3001/bookie-subject"
+      "url": "/bookie-subject"
     },
     {
       "name": "Series",
-      "url": "http://localhost:3001/bookie-series"
+      "url": "/bookie-series"
     }
   ],
-  "search": "http://localhost:3001/search"
+  "search": "/search"
 }
