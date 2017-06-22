@@ -92,12 +92,12 @@ router.post('/:service', bodyparser, async (ctx) => {
 });
 
 router.get('/', bodyparser, async (ctx) => {
-  ctx.body = fs.readFileSync(path.join(__dirname, '../../', '/deploy/index.html')).toString()
+  ctx.body = fs.readFileSync(path.join(__dirname, '../../', '/build/index.html')).toString()
   ctx.status = 200;
 });
 app.use(cors({origin: false}));
 app.use(router.routes());
-app.use(serve('./deploy', '/'));
+app.use(serve('./build', '/'));
 
 
 app.on('error', (err) => {
