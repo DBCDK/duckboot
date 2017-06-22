@@ -34,7 +34,7 @@ export class ImageElement extends React.Component {
 
   componentDidMount() {
     if (!this.state.element.hasFetchedImage && !this.state.element.coverUrlThumbnail) {
-      request.post('http://localhost:3001/image')
+      request.post('/image')
         .send({pids: this.props.element.pid})
         .end((err, res) => {
           const element = this.state.element;
