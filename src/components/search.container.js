@@ -9,6 +9,9 @@ export default class Search extends React.Component {
   };
 
   onSubmit = (e) => {
+    if (!this.input.value) {
+      return;
+    }
     e.preventDefault();
     GlobalState.search({
       limit: this.limit,
@@ -25,7 +28,7 @@ export default class Search extends React.Component {
     return(
       <div className="black-box">
         <form className="search" action="" onSubmit={this.onSubmit}>
-          <input className="" ref={ref => this.input = ref} type="text" defaultValue="hest" placeholder="Søg på title eller forfatter"/>
+          <input className="" ref={ref => this.input = ref} type="text"  placeholder="Søg på title eller forfatter"/>
           <SearchSvg />
         </form>
       </div>

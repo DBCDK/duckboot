@@ -83,7 +83,6 @@ class GlobalState {
       .end((err, res) => {
         if (res && res.text) {
           const data = JSON.parse(res.text);
-          console.log(data);
           this.setState({search: {data, query: query.q, searching: false}})
         }
         else {
@@ -120,7 +119,6 @@ class GlobalState {
     request.post(recommender.url)
       .send(recommenderRequest)
       .end((err, res) => {
-      console.log(err, res);
         if (res && res.text) {
           const result = res.body.response;
           recommendations.response = result;
@@ -135,10 +133,11 @@ class GlobalState {
   }
 
   addLike(element, value) {
-    this.removeLike(element);
+    this.removeLike(element)
+    const pid = Array.isArray(element.pid) && element.pid[0] || element.pid;
     const profile = this.getProfile();
     profile.ratings = profile.ratings.concat([{
-      pid: element.pid[0],
+      pid,
       element,
       like: value
     }]);
@@ -146,30 +145,35 @@ class GlobalState {
   }
 
   removeLike(element) {
+    const pid = Array.isArray(element.pid) && element.pid[0] || element.pid;
     const profile = this.getProfile();
-    profile.ratings = profile.ratings.filter(like => like.pid !== element.pid[0]);
+    profile.ratings = profile.ratings.filter(like => like.pid !== pid);
     this.setState({profile: Object.assign({}, profile)})
   }
 
   save(element) {
     const savedInState = this.getState().saved || [];
+    element .pid = Array.isArray(element.pid) && element.pid[0] || element.pid;
     const saved = savedInState.concat([element]);
     this.setState({saved})
   }
 
   removeSaved(element) {
-    const saved = this.getState().saved.filter(saved => saved.pid !== element.pid[0]);
+    const pid = Array.isArray(element.pid) && element.pid[0] || element.pid;
+    const saved = this.getState().saved.filter(saved => saved.pid !== pid);
     this.setState({saved})
   }
 
   isSaved(element) {
+    const pid = Array.isArray(element.pid) && element.pid[0] || element.pid;
     const saved = this.getState().saved || [];
-    return saved.filter(saved => saved.pid === (element.pid[0] || element.pid)).length > 0;
+    return saved.filter(saved => saved.pid === pid).length > 0;
   }
 
   getRating(element) {
+    const pid = Array.isArray(element.pid) && element.pid[0] || element.pid;
     const profile = this.getProfile();
-    return profile.ratings.filter(like => like.pid === (element.pid[0] || element.pid))[0] || null;
+    return profile.ratings.filter(like => like.pid === pid)[0] || null;
   }
 
   getRatings() {

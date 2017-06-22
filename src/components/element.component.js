@@ -47,7 +47,6 @@ export class ImageElement extends React.Component {
 
             }
           }
-          console.log(element);
           this.setState({element});
         });
 
