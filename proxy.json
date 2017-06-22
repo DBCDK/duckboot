@@ -6,22 +6,22 @@
   },
   {
     "name": "bookie-loan",
-    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/loan",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/loan",
     "method": "post"
   },
   {
     "name": "bookie-subject",
-    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/subject",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/subject",
     "method": "post"
   },
   {
     "name": "bookie-popular",
-    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/popular",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/popular",
     "method": "post"
   },
   {
     "name": "bookie-series",
-    "url": "http://0.bookie-cisterne.xp.prod.mcp1.dbc.dk/bookie/series",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/series",
     "method": "post"
   }
 ]
