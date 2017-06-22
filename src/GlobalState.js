@@ -42,7 +42,6 @@ class GlobalState {
   }
 
   loadInitialState() {
-    // TODO make this a configuration
     request.get('settings.json')
       .end((err, res) => {
         const initState = JSON.parse(res.text);

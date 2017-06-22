@@ -20,7 +20,7 @@ export class RecommenderButtons extends React.Component {
   constructor() {
     super();
     this.state = {
-      recommenders: []
+      recommenders: GlobalState.getState().recommenders || []
     };
   }
 
