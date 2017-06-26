@@ -6,8 +6,8 @@
 // Libraries
 import Router from 'koa-router';
 import BodyParser from 'koa-body';
-import {search, getImage} from './clients/openplatform.client';
-import services from '../../services.json';
+import {search, getImage} from '../clients/openplatform.client';
+import services from '../../../services.json';
 import path from 'path';
 import fs from 'fs';
 

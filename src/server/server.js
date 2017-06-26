@@ -8,7 +8,7 @@ import Koa from 'koa';
 import cors from 'koa2-cors';
 import config from '../config';
 import serve from 'koa-better-serve';
-import router from './router';
+import router from './router/router';
 const app = new Koa();
 
 app.use(cors({origin: false}));
