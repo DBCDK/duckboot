@@ -1,7 +1,6 @@
 import React from 'react';
 import GlobalState from '../GlobalState';
 import {ElementList} from './element.component';
-import Booster from './booster';
 import Filters from './filters';
 import JsonView from './jsonView.container';
 
