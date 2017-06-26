@@ -1,5 +1,5 @@
-import {promiseRequest} from '../request.util';
-import {getToken} from '../smaug.client';
+import {promiseRequest} from '../utils/request.util';
+import {getToken} from './smaug.client';
 
 import config from '../../config';
 

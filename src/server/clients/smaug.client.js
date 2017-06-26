@@ -3,8 +3,8 @@
  * Implementing Smaug
  */
 
-import config from '../config';
-import {promiseRequest} from './request.util';
+import config from '../../config';
+import {promiseRequest} from '../utils/request.util';
 
 let TOKEN = null;
 const TOKENS = {};
