@@ -113,6 +113,13 @@ class GlobalState {
       data: [],
       request: recommenderRequest,
       response: {}
+    };
+    if (this.getProfile().agencyId) {
+      const baseFilter = {
+        name: 'baseFilter',
+        collections: [this.getProfile().agencyId]
+      };
+      recommenderRequest.filters.push(baseFilter);
     }
     this.setState({recommendations, recommenders, recommending: true});
     request.post(recommender.url)
