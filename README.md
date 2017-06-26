@@ -31,13 +31,17 @@ This is only needed for development.
 To start ti the application in development mode run `npm run start`
 
 #deploy
-run `npm run build`. Frontend Application is added to the deploy folder. 
+run `npm run build`. Frontend Application is added to the build folder. 
  
 # Start application
 start the application with `node src/server/index.js`
 
 # Proxy services
-Setup proxy services in /proxy.json
+Setup proxy services in /services.json
+- name: 'Display name on the button'
+- proxy: 'The internal proxy url'
+- url: 'the url of the service'
+- method: 'http method for calling the service. Defaults to post'
 
 # Recommender buttons
 Setup recommender buttons in deploy/settings.json

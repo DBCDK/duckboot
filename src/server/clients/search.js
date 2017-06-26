@@ -1,7 +1,7 @@
-import {promiseRequest} from './request.util';
-import {getToken} from './smaug.client';
+import {promiseRequest} from '../request.util';
+import {getToken} from '../smaug.client';
 
-import config from '../config';
+import config from '../../config';
 
 export const search = async ({q}, {agencyId}) => {
   return await makeRequestToServiceProvider({q, agencyId}, 'search');

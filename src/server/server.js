@@ -10,8 +10,8 @@ import cors from 'koa2-cors';
 import request from 'superagent';
 import BodyParser from 'koa-body';
 import config from '../config';
-import services from '../../proxy.json';
-import {search, getImage} from './search';
+import services from '../../services.json';
+import {search, getImage} from './clients/search';
 import serve from 'koa-better-serve';
 import path from 'path';
 import fs from 'fs';
@@ -22,7 +22,7 @@ const router = new Router();
 const bodyparser = new BodyParser();
 
 function getService(name) {
-  const result = services.filter(service => service.name === name);
+  const result = services.filter(service => service.proxy === name);
   if (result.length) {
     return result[0];
   }
@@ -68,12 +68,29 @@ router.post('/image', bodyparser, async (ctx) => {
   }
 });
 
+router.get('/buttons', async (ctx) => {
+  try {
+    const response = services.map(service => {
+      return {
+        name: service.name,
+        url: service.proxy
+      };
+    });
+    ctx.body = response;
+    ctx.status = 200;
+  }
+  catch (e) {
+    console.error(e);
+  }
+});
+
+
 router.post('/:service', bodyparser, async (ctx) => {
   const service = getService(ctx.params.service);
   if (service) {
     try {
       const response = await promiseRequest({
-        method: service.method,
+        method: service.method || 'post',
         url: service.url,
         query: ctx.query,
         body: ctx.request.body

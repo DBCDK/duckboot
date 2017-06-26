@@ -42,11 +42,10 @@ class GlobalState {
   }
 
   loadInitialState() {
-    request.get('settings.json')
+    request.get('/buttons')
       .end((err, res) => {
-        const initState = JSON.parse(res.text);
-        const {recommenders, search} = initState;
-        this.setState({recommenders, searchUrl: search});
+        const recommenders = JSON.parse(res.text);
+        this.setState({recommenders});
       });
   }
 
@@ -77,7 +76,7 @@ class GlobalState {
 
   search(query) {
     this.setState({search: {query: query, searching: true}});
-    request.post(this.state.searchUrl)
+    request.post('/search')
       .send({query, profile: this.getProfile()})
       .end((err, res) => {
         if (res && res.text) {
@@ -125,7 +124,7 @@ class GlobalState {
     request.post(recommender.url)
       .send(recommenderRequest)
       .end((err, res) => {
-        if (res && res.text) {
+        if (res && res.body) {
           const result = res.body.response;
           recommendations.response = result;
           recommendations.header = res.body.responseHeader;
