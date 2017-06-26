@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Search from './components/search.container';
-import SearchResult from './components/searchResult.component';
-import {RatingsList, RatingsListJson} from './components/rate.component';
-import Recommendations, {RecommenderButtons, RecommenderJson} from './components/recommendations.container';
-import Profiles, {CurrentProfile} from './components/profile.container';
-import SavedList from './components/savedList.container';
+import Search from './components/search/search.container';
+import SearchResult from './components/search/searchResult.component';
+import {RatingsList, RatingsListJson} from './components/rate/rate.component';
+import Recommendations, {RecommenderButtons, RecommenderJson} from './components/recommenders/recommendations.container';
+import Profiles, {CurrentProfile} from './components/profile/profile.container';
+import SavedList from './components/elements/savedList.container';
 import GlobalState from './GlobalState';
 
 

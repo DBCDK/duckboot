@@ -1,22 +1,9 @@
 import React from 'react';
-import JSONView from './jsonView.container';
-import GlobalState from '../GlobalState';
-import {CloseSvg} from './svg.container'
+import FilterList from './filterList.component';
+import AddFilter from './addFilter.component';
+import GlobalState from '../../GlobalState';
 
-function AddElement({error, value, change}) {
-  const style = {};
-  if (error) {
-    style.border = "1px solid red";
-  }
-  return (
-    <div>
-      <textarea className="w-100 h4" style={style} defaultValue='{"name": ""}'
-                onChange={e => change(e.currentTarget.value)}/>
-    </div>
-  );
-}
-
-export default class Filters extends React.Component {
+export default class FilterContainer extends React.Component {
 
   constructor(props) {
     super(props);
@@ -63,7 +50,7 @@ export default class Filters extends React.Component {
         <h2 onClick={e => this.setState({show: !this.state.show})} className="filters--toggle mb0 pa0">Filters/Boosters</h2>
         <div className={(this.state.show && 'show') || 'hide'}>
           <form className={`filters mb1`} onSubmit={this.submit}>
-            <AddElement error={this.state.jsonError} change={value => this.changeValue(value)}/>
+            <AddFilter error={this.state.jsonError} change={value => this.changeValue(value)}/>
             <select className="dib button-select" ref="type" name="type" defaultValue="filters">
               <option value="filters">Filter</option>
               <option value="boosters">Booster</option>
@@ -71,42 +58,11 @@ export default class Filters extends React.Component {
             <input className="button active ml2" type="submit" value={`Tilføj`}/>
           </form>
           <div>
-            {(this.state.filters.length && <ElementList remove={this.removeElement} elements={this.state.filters} type="filters"/>) || ''}
-            {(this.state.boosters.length && <ElementList remove={this.removeElement} elements={this.state.boosters} type="boosters"/>) || ''}
+            {(this.state.filters.length && <FilterList remove={this.removeElement} elements={this.state.filters} type="filters"/>) || ''}
+            {(this.state.boosters.length && <FilterList remove={this.removeElement} elements={this.state.boosters} type="boosters"/>) || ''}
           </div>
         </div>
       </div>
     );
   }
-}
-
-function ElementList({elements, type, remove}) {
-  return (
-    <div className="mb1">
-      <h3>{type}</h3>
-      {
-        (elements.length
-        && elements.map(el => <FilterView key={el} element={el} remove={e => remove(type, el)}/>))
-        || 'Ingen elementer oprettet'
-      }
-    </div>
-
-
-  );
-}
-
-function FilterView({element, remove}) {
-  return (
-    <div className="filter">
-      <div className="filter--remove">
-        <span className="filter--close" onClick={remove}>
-          <span className="icon medium round">
-            <CloseSvg />
-          </span>
-        </span>
-      </div>
-
-      <JSONView {...element} />
-    </div>
-  );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import GlobalState from '../GlobalState';
-import {ElementList} from './element.component';
+import GlobalState from '../../GlobalState';
+import ElementList from '../elements/elementList.component';
 
 function NoResults({query}) {
   return (

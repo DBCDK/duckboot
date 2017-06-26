@@ -1,8 +1,8 @@
 import React from 'react';
-import GlobalState from '../GlobalState';
-import {ElementList} from './element.component';
-import Filters from './filters';
-import JsonView from './jsonView.container';
+import GlobalState from '../../GlobalState';
+import ElementList from '../elements/elementList.component';
+import Filters from '../filters/filterContainer.component';
+import JsonView from '../jsonView/jsonView.container';
 
 export function RecommenderButton(recommender) {
   const onClick = (e) => {

@@ -1,8 +1,8 @@
 import React from 'react';
-import GlobalState from '../GlobalState';
-import {ElementList} from './element.component';
-import JsonView from './jsonView.container';
-import {PlusSvg, MinusSvg, StarSvg} from './svg.container';
+import GlobalState from '../../GlobalState';
+import ElementList from '../elements/elementList.component';
+import JsonView from '../jsonView/jsonView.container';
+import {PlusSvg, MinusSvg, StarSvg} from '../svg/svg.container';
 
 export class RatingsList extends React.Component {
   constructor() {

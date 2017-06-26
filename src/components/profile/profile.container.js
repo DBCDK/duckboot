@@ -1,4 +1,4 @@
-import GlobalState from '../GlobalState';
+import GlobalState from '../../GlobalState';
 import React from 'react';
 
 function ProfileView(profile) {

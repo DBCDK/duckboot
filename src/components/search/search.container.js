@@ -1,6 +1,6 @@
 import React from 'react';
-import GlobalState from '../GlobalState';
-import {SearchSvg} from './svg.container';
+import GlobalState from '../../GlobalState';
+import {SearchSvg} from '../svg/svg.container';
 
 export default class Search extends React.Component {
   constructor() {
