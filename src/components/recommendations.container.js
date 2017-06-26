@@ -10,7 +10,7 @@ export function RecommenderButton(recommender) {
     GlobalState.recommend(recommender, GlobalState.getRatings());
   };
   return (
-    <a href="#" className={`button ${recommender.isActive && 'active' || 'submit'}`} onClick={onClick}>{recommender.name}</a>
+    <button className={`button ${recommender.isActive ? 'active' : 'submit'}`} onClick={onClick}>{recommender.name}</button>
   );
 }
 
@@ -41,10 +41,11 @@ export class RecommenderButtons extends React.Component {
 export default class Recommender extends React.Component {
   constructor() {
     super();
+    const {recommendations} = GlobalState.getState();
     this.state = {
-      recommendations: GlobalState.getState().recommendations,
+      recommendations: recommendations,
+      profileUpdated: this.didProfileUpdate(recommendations.request)
     };
-    this.state.profileUpdated = this.didProfileUpdate(this.state.recommendations.request);
   }
 
   didProfileUpdate(request) {
@@ -68,7 +69,7 @@ export default class Recommender extends React.Component {
   };
 
   profileUpdated() {
-    return this.state.profileUpdated && <p>Profilen er opdateret. <a href="#" onClick={this.getRecommendations}>Opdater anbefalinger</a></p>;
+    return this.state.profileUpdated && <p>Profilen er opdateret. <button onClick={this.getRecommendations}>Opdater anbefalinger</button></p>;
   }
   render() {
     return(
@@ -79,7 +80,7 @@ export default class Recommender extends React.Component {
         </div>
         {this.profileUpdated()}
         <h2>Resultater</h2>
-        {this.state.recommending && 'Søger...' || ElementList({list: this.state.recommendations.data || []})}
+        {this.state.recommending ? 'Søger...' : ElementList({list: this.state.recommendations.data || []})}
       </div>
     );
 

@@ -14,14 +14,14 @@ function ProfileView(profile) {
   return (
     <article className="profile">
       <h2 className="mb1">{profile.name}</h2>
-      <h3 className="mb0 gray">{profile.agencyId && `Agency: ${profile.agencyId }` || ''}</h3>
+      <h3 className="mb0 gray">{profile.agencyId ? `Agency: ${profile.agencyId }` : ''}</h3>
       <h3 className="ratings mb1">
         {profile.ratings.filter(rating => rating.like).length} likes
         , {profile.ratings.filter(rating => !rating.like).length} dislikes
       </h3>
       <div className="profile-buttons">
-        <a className="button remove" href="#" onClick={remove}>Slet profil</a>
-        <a className="button submit" href="#" onClick={select}>Vælg profil</a>
+        <button className="button remove" onClick={remove}>Slet profil</button>
+        <button className="button submit" onClick={select}>Vælg profil</button>
       </div>
 
     </article>
@@ -72,11 +72,9 @@ export default class Profiles extends React.Component {
     super();
     const {profile, profiles} = GlobalState.getState();
     this.state = {profile, profiles};
-    this.listener;
   }
 
   componentDidMount() {
-    const {profile, profiles} = GlobalState.getState();
     this.listener = GlobalState.listen(({profiles, profile}) => {
       this.setState({profiles, profile});
     });
@@ -125,7 +123,7 @@ export class CurrentProfile extends React.Component {
           , {this.state.profile.ratings.filter(rating => !rating.like).length} dislikes
         </div>
         <div>
-          <a href="#" onClick={selectProfile}>Vælg anden profil</a>
+          <button onClick={selectProfile}>Vælg anden profil</button>
         </div>
       </article>
     );

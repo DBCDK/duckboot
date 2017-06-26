@@ -61,7 +61,7 @@ export default class Filters extends React.Component {
     return (
       <div className={"filters--wrapper"}>
         <h2 onClick={e => this.setState({show: !this.state.show})} className="filters--toggle mb0 pa0">Filters/Boosters</h2>
-        <div className={this.state.show && 'show' || 'hide'}>
+        <div className={(this.state.show && 'show') || 'hide'}>
           <form className={`filters mb1`} onSubmit={this.submit}>
             <AddElement error={this.state.jsonError} change={value => this.changeValue(value)}/>
             <select className="dib button-select" ref="type" name="type" defaultValue="filters">
@@ -71,8 +71,8 @@ export default class Filters extends React.Component {
             <input className="button active ml2" type="submit" value={`Tilføj`}/>
           </form>
           <div>
-            {this.state.filters.length && <ElementList remove={this.removeElement} elements={this.state.filters} type="filters"/> || ''}
-            {this.state.boosters.length && <ElementList remove={this.removeElement} elements={this.state.boosters} type="boosters"/> || ''}
+            {(this.state.filters.length && <ElementList remove={this.removeElement} elements={this.state.filters} type="filters"/>) || ''}
+            {(this.state.boosters.length && <ElementList remove={this.removeElement} elements={this.state.boosters} type="boosters"/>) || ''}
           </div>
         </div>
       </div>
@@ -85,8 +85,8 @@ function ElementList({elements, type, remove}) {
     <div className="mb1">
       <h3>{type}</h3>
       {
-        elements.length
-        && elements.map(el => <FilterView key={el} element={el} remove={e => remove(type, el)}/>)
+        (elements.length
+        && elements.map(el => <FilterView key={el} element={el} remove={e => remove(type, el)}/>))
         || 'Ingen elementer oprettet'
       }
     </div>

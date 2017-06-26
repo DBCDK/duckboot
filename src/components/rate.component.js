@@ -68,7 +68,7 @@ export class RatingsListJson extends React.Component {
 
 function Like({element, rating}) {
   const isLiked = rating && rating.like;
-  const color = isLiked && 'green' || 'grey';
+  const color = isLiked ? 'green' : 'grey';
   const onCLick = () => {
     if (isLiked) {
       GlobalState.removeLike(element);
@@ -98,7 +98,7 @@ function DisLike({element, rating}) {
       GlobalState.addLike(element, false)
     }
   };
-  const color = isDisliked && 'red' || 'grey';
+  const color = isDisliked ? 'red' : 'grey';
 
   return (
     <div className={`dislike rate-button ${color}`} onClick={onCLick}>
@@ -119,7 +119,7 @@ function Save({element, isSaved}) {
     }
   };
 
-  const color = isSaved && 'yellow' || 'grey';
+  const color = isSaved ? 'yellow' : 'grey';
 
   return (
     <div className={`dislike rate-button ${color}`} onClick={onCLick}>

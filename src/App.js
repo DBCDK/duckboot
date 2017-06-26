@@ -47,30 +47,30 @@ class SearchPage extends React.Component {
   render() {
     return (
       <div className="search-page flex">
-        {this.state.search &&
-        <Section title={<span>Søg<a href="#" onClick={this.toggleSearch}>Vis gemte</a></span>} Header={<Search />}>
+        {this.state.search ?
+        <Section title={<span>Søg<a href="#saved" onClick={this.toggleSearch}>Vis gemte</a></span>} Header={<Search />}>
           <SearchResult />
         </Section>
-        ||
-        <Section title={<span>Gemte poster<a href="#" onClick={this.toggleSearch}>Søg</a></span>} Header="">
+        :
+        <Section title={<span>Gemte poster<a href="#search" onClick={this.toggleSearch}>Søg</a></span>} Header="">
           <SavedList />
         </Section>
         }
-        {this.state.profile &&
-        <Section title={<span>Profil<a href="#" onClick={this.toggleProfile}>Vis JSON</a></span>} Header={<CurrentProfile />}>
+        {this.state.profile ?
+        <Section title={<span>Profil<a href="#profile" onClick={this.toggleProfile}>Vis JSON</a></span>} Header={<CurrentProfile />}>
           <RatingsList />
         </Section>
-        ||
-        <Section title={<span>Profil<a href="#" onClick={this.toggleProfile}>Skjul JSON</a></span>} Header={<CurrentProfile />}>
+        :
+        <Section title={<span>Profil<a href="#profile" onClick={this.toggleProfile}>Skjul JSON</a></span>} Header={<CurrentProfile />}>
           <RatingsListJson />
         </Section>
         }
-        {this.state.recommender &&
-        <Section title={<span>Anbefalinger<a href="#" onClick={this.toggleRecommenders}>Vis JSON</a></span>} Header={<RecommenderButtons />}>
+        {this.state.recommender ?
+        <Section title={<span>Anbefalinger<a href="#recommenders" onClick={this.toggleRecommenders}>Vis JSON</a></span>} Header={<RecommenderButtons />}>
           <Recommendations />
         </Section>
-        ||
-        <Section title={<span>Anbefalinger<a href="#" onClick={this.toggleRecommenders}>Skjul JSON</a></span>} Header={<RecommenderButtons />}>
+        :
+        <Section title={<span>Anbefalinger<a href="#recommenders" onClick={this.toggleRecommenders}>Skjul JSON</a></span>} Header={<RecommenderButtons />}>
           <RecommenderJson />
         </Section>
         }
@@ -101,11 +101,9 @@ class App extends Component {
     switch (this.state.view) {
       case 'search':
         return <SearchPage />;
-        break;
       case 'selectProfile':
       default :
         return <Profiles/>;
-        break;
     }
   }
 
