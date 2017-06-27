@@ -4,10 +4,10 @@
 @import 'includes/spacer';
 @import 'includes/spinner';
 
-@import "global/settings.scss";
+@import "global/settings";
 @import "global/resets";
 @import "global/typography";
-@import "global/layout.scss";
+@import "global/layout";
 @import "global/utils";
 @import "global/button";
 
@@ -16,6 +16,7 @@
 @import "components/section";
 @import "components/recommender";
 @import "components/rate";
+@import "components/filters";
 
 .app-header {
   text-align: center;

@@ -77,13 +77,12 @@ a {
     text-transform: uppercase;
     font-size: 10px; }
 
-.flex {
+/*.flex {
   display: flex;
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center; }
-
+}*/
 .container {
   margin: 2rem; }
 
@@ -176,8 +175,7 @@ button, .button {
   display: inline-block;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   transition: all 200ms ease-in;
-  cursor: pointer;
-  min-width: 100px; }
+  cursor: pointer; }
   button.active, .button.active {
     background-color: #29bd56;
     color: white; }
@@ -224,6 +222,11 @@ button, .button {
     outline: none;
     background-color: #29bd56; }
 
+.button-select {
+  height: 3rem;
+  background-color: #29bd56;
+  color: white; }
+
 .profile-list h2 {
   text-align: center; }
 
@@ -245,7 +248,7 @@ button, .button {
     .profile .profile-buttons > * + * {
       margin-left: 2rem; }
 
-input {
+input[type="text"] {
   width: 100%;
   display: inline-block;
   border: none;
@@ -375,6 +378,42 @@ input.underline:focus {
     color: #296bbd; }
     .rate-button.yellow .icon {
       background-color: #296bbd; }
+
+.filters--wrapper .hide {
+  height: 0;
+  overflow: hidden; }
+
+.filters--wrapper .show {
+  height: inherit;
+  overflow: hidden; }
+
+.filter {
+  position: relative; }
+
+.filter--remove {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+  opacity: 0;
+  transition: all 200ms ease-in; }
+
+.filter--close {
+  position: absolute;
+  display: inline-block;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  cursor: pointer; }
+
+.filter:hover .filter--remove {
+  opacity: 1; }
+
+.filters--toggle {
+  cursor: pointer; }
 
 .app-header {
   text-align: center;

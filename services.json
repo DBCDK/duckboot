@@ -1,22 +1,22 @@
 [
   {
-    "name": "search",
-    "url": "http://xptest.dbc.dk/duckboots/api/search",
-    "method": "post"
+    "name": "Loan",
+    "proxy": "loan",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/loan"
   },
   {
-    "name": "loan",
-    "url": "http://xptest.dbc.dk/duckboots/api/recommend/loan",
-    "method": "post"
+    "name": "Subject",
+    "proxy": "subject",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/subject"
   },
   {
-    "name": "new",
-    "url": "http://xptest.dbc.dk/duckboots/api/recommend/new",
-    "method": "post"
+    "name": "Popular",
+    "proxy": "popular",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/popular"
   },
   {
-    "name": "cosim",
-    "url": "http://xptest.dbc.dk/duckboots/api/recommend-cosim",
-    "method": "post"
+    "name": "Series",
+    "proxy": "series",
+    "url": "http://0.bookie-cisterne.xp.prod.mcp1-proxy.dbc.dk/bookie/series"
   }
 ]
