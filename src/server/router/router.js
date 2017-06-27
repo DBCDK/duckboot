@@ -60,7 +60,7 @@ router.post('/:service', bodyparser, async (ctx) => {
 });
 
 router.get('/', bodyparser, async (ctx) => {
-  ctx.body = fs.readFileSync(path.join(__dirname, '../../', '/build/index.html')).toString();
+  ctx.body = fs.readFileSync(path.join(__dirname, '../../../', '/build/index.html')).toString();
   ctx.status = 200;
 });
 
