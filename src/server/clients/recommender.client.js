@@ -1,15 +1,15 @@
-import {promiseRequest} from '../utils/request.util';
-import {getRecommender} from '../utils/recommender.util';
+import {promiseSuperRequest} from '../utils/request.util';
+import getRecommender from '../utils/recommender.util';
 
 
 export default async function call(service, query, body) {
   const recommender = getRecommender(service);
+
   if (recommender) {
     try {
-      return await promiseRequest({
-        method: recommender.method || 'post',
+      return await promiseSuperRequest({
+        method: 'post',
         url: recommender.url,
-        query: query,
         body: body
       });
 
