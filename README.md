@@ -28,7 +28,7 @@ All data for profiles is stored in localstorage.
 #Development
 For rapid development [create-react-app](https://github.com/facebookincubator/create-react-app) is used.
 This is only needed for development.
-To start ti the application in development mode run `npm run start`
+To start ti the application in development mode run `npm run dev`
 
 #deploy
 run `npm run build`. Frontend Application is added to the build folder. 
