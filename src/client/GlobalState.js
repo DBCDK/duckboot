@@ -116,7 +116,7 @@ class GlobalState {
     if (this.getProfile().agencyId) {
       const baseFilter = {
         name: 'baseFilter',
-        collections: [this.getProfile().agencyId]
+        agencies: [this.getProfile().agencyId]
       };
       recommenderRequest.filters.push(baseFilter);
     }
