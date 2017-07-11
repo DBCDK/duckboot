@@ -4,7 +4,6 @@ import getRecommender from '../utils/recommender.util';
 
 export default async function call(service, query, body) {
   const recommender = getRecommender(service);
-
   if (recommender) {
     try {
       return await promiseSuperRequest({
@@ -12,7 +11,6 @@ export default async function call(service, query, body) {
         url: recommender.url,
         body: body
       });
-
     }
     catch (e) {
       return {

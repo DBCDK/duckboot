@@ -57,7 +57,7 @@ router.get('/buttons', async (ctx) => {
 router.post('/:service', bodyparser, async (ctx) => {
   const response = await callRecommender(ctx.params.service, ctx.query, ctx.request.body);
   ctx.status = response.status;
-  ctx.body = response.body || null;
+  ctx.body = response.body || {};
 });
 
 router.get('/', bodyparser, async (ctx) => {
