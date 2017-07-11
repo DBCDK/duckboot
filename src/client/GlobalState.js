@@ -118,7 +118,15 @@ class GlobalState {
         name: 'baseFilter',
         agencies: [this.getProfile().agencyId]
       };
-      recommenderRequest.filters.push(baseFilter);
+      let contained = false;
+      recommenderRequest.filters.forEach(filter =>{
+        if (JSON.stringify(filter) === JSON.stringify(baseFilter)) {
+          contained = true;
+        }
+      });
+      if (!contained) {
+        recommenderRequest.filters.push(baseFilter);
+      }
     }
     this.setState({recommendations, recommenders, recommending: true});
     request.post(recommender.url)
